@@ -5,6 +5,4 @@ import 'package:injectable/injectable.dart';
 final getIt = GetIt.I;
 
 @injectableInit
-void configureDependencies() {
-  getIt.init();
-}
+void configureDependencies() async => getIt.init();

@@ -1,7 +1,12 @@
+import 'package:auth_test/res/theme.dart';
 import 'package:auth_test/screens/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'dependencies.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
   runApp(const AuthApp());
 }
 
@@ -10,6 +15,6 @@ class AuthApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: const AuthScreen());
+    return MaterialApp(theme: AppTheme().lightTheme, home: const AuthScreen());
   }
 }
