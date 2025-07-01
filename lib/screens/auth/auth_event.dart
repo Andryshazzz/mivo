@@ -21,9 +21,3 @@ final class RefreshTokenEvent extends AuthEvent {
 
   RefreshTokenEvent(this.refreshToken);
 }
-
-final class CheckAuthEvent extends AuthEvent {
-  final String jwt;
-
-  CheckAuthEvent({required this.jwt});
-}

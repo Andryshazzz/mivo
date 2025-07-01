@@ -15,7 +15,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SendCodeEvent>(_onSendCode);
     on<VerifyCodeEvent>(_onVerifyCode);
     on<RefreshTokenEvent>(_onRefreshToken);
-    on<CheckAuthEvent>(_onCheckAuth);
   }
 
   Future<void> _onSendCode(SendCodeEvent event, Emitter<AuthState> emit) async {
@@ -35,12 +34,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(isLoading: true, error: null));
     try {
       final tokens = await authRepository.verifyCode(event.email, event.code);
+      final userId = await authRepository.checkAuth(tokens['jwt']!);
       emit(
         state.copyWith(
           isLoading: false,
           isAuthorized: true,
           jwtToken: tokens['jwt'],
           refreshToken: tokens['refresh_token'],
+          userId: userId,
         ),
       );
     } catch (e) {
@@ -62,19 +63,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           refreshToken: tokens['refresh_token'],
         ),
       );
-    } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
-    }
-  }
-
-  Future<void> _onCheckAuth(
-    CheckAuthEvent event,
-    Emitter<AuthState> emit,
-  ) async {
-    emit(state.copyWith(isLoading: true, error: null));
-    try {
-      final userId = await authRepository.checkAuth(event.jwt);
-      emit(state.copyWith(isLoading: false, userId: userId));
     } catch (e) {
       emit(state.copyWith(isLoading: false, error: e.toString()));
     }

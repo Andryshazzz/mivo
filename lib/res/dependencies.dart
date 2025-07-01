@@ -1,4 +1,4 @@
-import 'package:auth_test/dependencies.config.dart';
+import 'package:auth_test/res/dependencies.config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 

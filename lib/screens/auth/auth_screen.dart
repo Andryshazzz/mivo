@@ -1,4 +1,4 @@
-import 'package:auth_test/dependencies.dart';
+import 'package:auth_test/res/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,17 +19,13 @@ class AuthScreen extends StatelessWidget {
         body: SafeArea(
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              if (state.isAuthorized && state.userId != null) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Authorized', style: ProjectTextStyles.outfitBold),
-                      Text(
-                        'User ID: ${state.userId}',
-                        style: ProjectTextStyles.outfitRegular,
-                      ),
-                    ],
+              if (state.error != null) {
+                return Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Center(
+                    child: Text(
+                      'error: Сервер возвращает 403 код, вероятно jwt токен истекает или у клиента недостаточно прав',
+                    ),
                   ),
                 );
               }
@@ -94,15 +90,9 @@ class _AuthFormState extends State<AuthForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state.error != null) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.error!)));
-        }
-        if (state.isAuthorized) {
+        if (state.isAuthorized && state.jwtToken != null) {
           _emailController.clear();
           _codeController.clear();
-          setState(() => _isCodeSent = false);
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -213,11 +203,6 @@ class _AuthFormState extends State<AuthForm> {
                                     VerifyCodeEvent(
                                       _emailController.text,
                                       _codeController.text,
-                                    ),
-                                  );
-                                  context.read<AuthBloc>().add(
-                                    CheckAuthEvent(
-                                      jwt: state.jwtToken ?? 'empty',
                                     ),
                                   );
                                 }
