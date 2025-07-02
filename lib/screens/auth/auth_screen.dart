@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../res/theme.dart';
-import 'auth_bloc.dart';
-import 'auth_event.dart';
-import 'auth_state.dart';
+import '../home/home_screen.dart';
+import 'controller/auth_bloc.dart';
+import 'controller/auth_event.dart';
+import 'controller/auth_state.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -19,7 +20,9 @@ class AuthScreen extends StatelessWidget {
         body: SafeArea(
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              if (state.error != null) {
+              if (state.jwtToken != null &&
+                  state.isLoading == false &&
+                  state.isAuthorized == true) {
                 return Padding(
                   padding: const EdgeInsets.all(20),
                   child: Center(
@@ -96,7 +99,7 @@ class _AuthFormState extends State<AuthForm> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HomeScreen(userId: state.userId!),
+              builder: (context) => HomeScreen(userId: '123'),
             ),
           );
         }
@@ -291,16 +294,5 @@ class MyButtonWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  final String userId;
-
-  const HomeScreen({super.key, required this.userId});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text('userId: $userId')));
   }
 }
