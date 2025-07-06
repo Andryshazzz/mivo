@@ -8,7 +8,7 @@ import 'res/dependencies.dart';
 
 void main() async => runZonedGuarded<void>(() async {
   WidgetsFlutterBinding.ensureInitialized();
-  configureDependencies();
+  await configureDependencies();
   runApp(const AuthApp());
 }, (e, st) => print('main error $e, $st'));
 
@@ -17,6 +17,6 @@ class AuthApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: AppTheme().lightTheme, home: const AuthScreen());
+    return MaterialApp(theme: AppTheme.lightTheme, home: const AuthScreen());
   }
 }

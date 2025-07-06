@@ -9,18 +9,18 @@ class AuthRepository {
   AuthRepository({required this.apiClient});
 
   Future<void> sendCode(String email) async {
-    apiClient.sendCode(email);
+    await apiClient.sendCode(email);
   }
 
   Future<Map<String, String>> verifyCode(String email, String code) async {
-    return await apiClient.verifyCode(email, code);
+    return apiClient.verifyCode(email, code);
   }
 
   Future<Map<String, String>> refreshToken(String refreshToken) async {
-    return await apiClient.refreshToken(refreshToken);
+    return apiClient.refreshToken(refreshToken);
   }
 
   Future<String> checkAuth(String jwtToken) async {
-    return await apiClient.checkAuth(jwtToken);
+    return apiClient.checkAuth(jwtToken);
   }
 }

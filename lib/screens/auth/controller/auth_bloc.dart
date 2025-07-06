@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart' show Bloc, Emitter;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../repos/auth_repo.dart';
@@ -16,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSendCode(SendCodeEvent event, Emitter<AuthState> emit) async {
-    emit(state.copyWith(isLoading: true, error: null));
+    emit(state.copyWith(isLoading: true));
     try {
       await authRepository.sendCode(event.email);
       emit(state.copyWith(isLoading: false));
