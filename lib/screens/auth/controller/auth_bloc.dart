@@ -1,7 +1,5 @@
-import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
+import 'package:bloc/bloc.dart' show Bloc, Emitter;
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 
 import '../../../repos/auth_repo.dart';
 import 'auth_event.dart';
