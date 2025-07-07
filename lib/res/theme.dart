@@ -63,9 +63,7 @@ class ProjectTextStyles {
 }
 
 class ProjectIcons {
-  static const String google = 'assets/icons/google.svg';
-  static const String user = 'assets/icons/user.svg';
-  static const String mainImage = 'assets/images/main_image.png';
+
 }
 
 extension ThemeShortcuts on BuildContext {
