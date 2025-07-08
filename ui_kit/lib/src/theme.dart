@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:ui_kit/src/theme_style/text_style.dart';
+
+import 'theme_style/colors.dart';
 
 class AppTheme {
   AppTheme._();
 
-  static final ThemeData lightTheme = ThemeData(
+  static final ThemeData darkTheme = ThemeData(
     useMaterial3: true,
-    colorScheme: const ColorScheme.light(primary: ProjectColors.lavenderEcho),
-    scaffoldBackgroundColor: ProjectColors.white,
+    colorScheme: const ColorScheme.dark(primary: ProjectColors.lavenderEcho),
+    scaffoldBackgroundColor: ProjectColors.noirViolet,
     textTheme: _buildTextTheme(),
   );
 
@@ -15,55 +18,25 @@ class AppTheme {
   static TextTheme _buildTextTheme() {
     return const TextTheme(
       displayLarge: ProjectTextStyles.workSansBold,
-      displayMedium: ProjectTextStyles.workSansSemiBold,
-      displaySmall: ProjectTextStyles.workSansMedium,
-      headlineMedium: ProjectTextStyles.workSansRegular,
-      headlineSmall: ProjectTextStyles.workSansMedium,
-      titleLarge: ProjectTextStyles.workSansSemiBold,
+      headlineMedium: ProjectTextStyles.workSansSemiBold,
+      titleLarge: ProjectTextStyles.workSansRegular,
       titleMedium: ProjectTextStyles.workSansMedium,
-      titleSmall: ProjectTextStyles.workSansRegular,
-      bodyLarge: ProjectTextStyles.workSansRegular,
-      bodyMedium: ProjectTextStyles.workSansRegular,
-      labelLarge: ProjectTextStyles.workSansMedium,
-      labelSmall: ProjectTextStyles.workSansRegular,
     );
   }
 }
 
-class ProjectColors {
-  static const white = Color(0xFFFFFFFF);
-  static const noirViolet = Color(0xFF090813);
-  static const lavenderEcho = Color(0xFF8970EC);
+class ProjectColorsExtension {
+  const ProjectColorsExtension();
+
+  Color get white => ProjectColors.white;
+  Color get gray => ProjectColors.gray;
+  Color get grayDark => ProjectColors.grayDark;
+  Color get noirVioletLight => ProjectColors.noirVioletLight;
+  Color get noirViolet => ProjectColors.noirViolet;
+  Color get lavenderEcho => ProjectColors.lavenderEcho;
 }
-
-class ProjectTextStyles {
-  static const workSansBold = TextStyle(
-    fontFamily: 'WorkSans',
-    fontWeight: FontWeight.w700,
-    fontSize: 12,
-  );
-
-  static const workSansSemiBold = TextStyle(
-    fontFamily: 'WorkSans',
-    fontWeight: FontWeight.w600,
-    fontSize: 12,
-  );
-
-  static const workSansRegular = TextStyle(
-    fontFamily: 'WorkSans',
-    fontWeight: FontWeight.w400,
-    fontSize: 12,
-  );
-
-  static const workSansMedium = TextStyle(
-    fontFamily: 'WorkSans',
-    fontWeight: FontWeight.w500,
-    fontSize: 12,
-  );
-}
-
-class ProjectIcons {}
 
 extension ThemeShortcuts on BuildContext {
+  ProjectColorsExtension get colors => const ProjectColorsExtension();
   ThemeData get theme => AppTheme.themeOf(this);
 }
