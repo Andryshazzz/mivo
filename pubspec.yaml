@@ -17,6 +17,7 @@ dependencies:
   injectable: ^2.5.0
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.17
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -44,3 +45,9 @@ flutter:
            weight: 400
          - asset: assets/fonts/WorkSans-SemiBold.ttf
            weight: 600
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/mivo.png"
+  min_sdk_android: 21
