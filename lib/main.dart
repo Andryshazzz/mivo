@@ -1,8 +1,7 @@
 import 'dart:async';
-
-import 'package:auth_test/res/theme.dart';
 import 'package:auth_test/screens/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 import 'res/dependencies.dart';
 

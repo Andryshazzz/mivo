@@ -1,13 +1,5 @@
-import 'package:auth_test/res/dependencies.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../res/theme.dart';
-import '../home/home_screen.dart';
-import 'controller/auth_bloc.dart';
-import 'controller/auth_event.dart';
-import 'controller/auth_state.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});

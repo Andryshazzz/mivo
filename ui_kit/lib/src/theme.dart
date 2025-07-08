@@ -62,9 +62,7 @@ class ProjectTextStyles {
   );
 }
 
-class ProjectIcons {
-
-}
+class ProjectIcons {}
 
 extension ThemeShortcuts on BuildContext {
   ThemeData get theme => AppTheme.themeOf(this);
