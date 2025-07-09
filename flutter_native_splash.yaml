@@ -1,0 +1,24 @@
+flutter_native_splash:
+  color: "#8970EC"
+  #background_image: "assets/background.png"
+  image: assets/images/mivo.png
+  #branding: assets/dart.png
+  #branding_mode: bottom
+  # branding_bottom_padding: 24
+  #color_dark: "#042a49"
+  #background_image_dark: "assets/dark-background.png"
+  #image_dark: assets/splash-invert.png
+  #branding_dark: assets/dart_dark.png
+
+  android_12:
+    branding: assets/images/mivo.png
+    color: "#8970EC"
+    #icon_background_color: "#111111"
+
+    #image_dark: assets/android12splash-invert.png
+    #color_dark: "#042a49"
+    #icon_background_color_dark: "#eeeeee"
+
+    #android: false
+    #ios: false
+    #web: false
