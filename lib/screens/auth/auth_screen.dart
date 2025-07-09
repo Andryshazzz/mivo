@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ui_kit/ui_kit.dart';
 
+import '../home/home_screen.dart';
+
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
 
@@ -34,7 +36,17 @@ class AuthScreen extends StatelessWidget {
               const SizedBox(height: 40),
               const InputFormField(),
               const SizedBox(height: 20),
-              CustomButton(text: 'Continue', onPressed: () {}),
+              CustomButton(
+                text: 'Continue',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<HomeScreen>(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                  );
+                },
+              ),
               const SizedBox(height: 20),
               Row(
                 children: [
