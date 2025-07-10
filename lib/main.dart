@@ -3,7 +3,7 @@ import 'package:auth_test/screens/auth/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-import 'res/dependencies.dart';
+import 'app/dependencies/dependencies.dart';
 
 void main() async => runZonedGuarded<void>(() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,0 +1,47 @@
+import 'package:flutter/material.dart';
+import 'package:ui_kit/src/theme.dart';
+
+enum MarkerColor {
+  red,
+  green,
+  orange,
+}
+
+class TaskMarker extends StatelessWidget {
+  final String text;
+  final MarkerColor color;
+
+  const TaskMarker({
+    super.key,
+    required this.text,
+    required this.color,
+  });
+
+  Color _getBackgroundColor(BuildContext context) {
+    switch (color) {
+      case MarkerColor.red:
+        return context.colors.red.withOpacity(0.2);
+      case MarkerColor.green:
+        return context.colors.green.withOpacity(0.2);
+      case MarkerColor.orange:
+        return context.colors.orange.withOpacity(0.2);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: _getBackgroundColor(context),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        text,
+        style: context.theme.textTheme.bodySmall?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+}

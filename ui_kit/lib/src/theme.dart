@@ -29,14 +29,26 @@ class ProjectColorsExtension {
   const ProjectColorsExtension();
 
   Color get white => ProjectColors.white;
+
   Color get gray => ProjectColors.gray;
+
   Color get grayDark => ProjectColors.grayDark;
+
   Color get noirVioletLight => ProjectColors.noirVioletLight;
+
   Color get noirViolet => ProjectColors.noirViolet;
+
   Color get lavenderEcho => ProjectColors.lavenderEcho;
+
+  Color get red => ProjectColors.red;
+
+  Color get orange => ProjectColors.orange;
+
+  Color get green => ProjectColors.green;
 }
 
 extension ThemeShortcuts on BuildContext {
   ProjectColorsExtension get colors => const ProjectColorsExtension();
+
   ThemeData get theme => AppTheme.themeOf(this);
 }

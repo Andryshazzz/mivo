@@ -19,6 +19,7 @@ dependencies:
   flutter_svg: ^2.0.17
   flutter_launcher_icons: ^0.14.4
   flutter_native_splash: ^2.4.6
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
