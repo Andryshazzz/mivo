@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      routes: const [TaskRoute(), PlanRoute()],
+      routes: const [TaskRoute(), PlanRoute(), CreateTaskRoute(), AnyRoute()],
       bottomNavigationBuilder: (_, tabRouter) {
         final currentIndex = tabRouter.activeIndex;
         return BottomNavigationBar(
@@ -41,6 +41,32 @@ class _HomeScreenState extends State<HomeScreen> {
                 context.icons.plan,
                 colorFilter: ColorFilter.mode(
                   currentIndex == 1
+                      ? context.colors.lavenderEcho
+                      : context.colors.gray.withOpacity(0.6),
+                  BlendMode.srcIn,
+                ),
+                height: 22,
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                context.icons.user,
+                colorFilter: ColorFilter.mode(
+                  currentIndex == 2
+                      ? context.colors.lavenderEcho
+                      : context.colors.gray.withOpacity(0.6),
+                  BlendMode.srcIn,
+                ),
+                height: 22,
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                context.icons.plan,
+                colorFilter: ColorFilter.mode(
+                  currentIndex == 3
                       ? context.colors.lavenderEcho
                       : context.colors.gray.withOpacity(0.6),
                   BlendMode.srcIn,

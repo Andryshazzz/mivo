@@ -11,6 +11,22 @@
 part of 'router.dart';
 
 /// generated route for
+/// [AnyScreen]
+class AnyRoute extends PageRouteInfo<void> {
+  const AnyRoute({List<PageRouteInfo>? children})
+    : super(AnyRoute.name, initialChildren: children);
+
+  static const String name = 'AnyRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AnyScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [AuthScreen]
 class AuthRoute extends PageRouteInfo<void> {
   const AuthRoute({List<PageRouteInfo>? children})
@@ -22,6 +38,22 @@ class AuthRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const AuthScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [CreateTaskScreen]
+class CreateTaskRoute extends PageRouteInfo<void> {
+  const CreateTaskRoute({List<PageRouteInfo>? children})
+    : super(CreateTaskRoute.name, initialChildren: children);
+
+  static const String name = 'CreateTaskRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CreateTaskScreen();
     },
   );
 }

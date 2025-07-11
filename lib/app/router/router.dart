@@ -1,6 +1,8 @@
 import 'package:auth_test/screens/plan/plan_screen.dart';
 import 'package:auth_test/screens/task/task_screen.dart';
 import 'package:auth_test/screens/auth/auth_screen.dart';
+import 'package:auth_test/screens/create_task/create_task_screen.dart';
+import 'package:auth_test/screens/any/any_screen.dart';
 import 'package:auth_test/screens/home/home_screen.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -16,6 +18,8 @@ class AppRouter extends RootStackRouter {
       children: [
         AutoRoute(page: TaskRoute.page),
         AutoRoute(page: PlanRoute.page),
+        AutoRoute(page: CreateTaskRoute.page),
+        AutoRoute(page: AnyRoute.page),
       ],
     ),
   ];
