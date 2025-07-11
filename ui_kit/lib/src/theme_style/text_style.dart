@@ -10,7 +10,7 @@ class ProjectTextStyles {
   static const workSansSemiBold = TextStyle(
     fontFamily: 'WorkSans',
     fontWeight: FontWeight.w600,
-    fontSize: 24,
+    fontSize: 20,
   );
 
   static const workSansRegular = TextStyle(

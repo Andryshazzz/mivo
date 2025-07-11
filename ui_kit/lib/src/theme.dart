@@ -8,9 +8,13 @@ class AppTheme {
 
   static final ThemeData darkTheme = ThemeData(
     useMaterial3: true,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
+    hoverColor: Colors.transparent,
     colorScheme: const ColorScheme.dark(primary: ProjectColors.lavenderEcho),
     scaffoldBackgroundColor: ProjectColors.noirViolet,
     textTheme: _buildTextTheme(),
+    bottomNavigationBarTheme: _buildNavTheme(),
   );
 
   static ThemeData themeOf(BuildContext context) => Theme.of(context);
@@ -21,6 +25,20 @@ class AppTheme {
       headlineMedium: ProjectTextStyles.workSansSemiBold,
       titleLarge: ProjectTextStyles.workSansRegular,
       titleMedium: ProjectTextStyles.workSansMedium,
+    );
+  }
+
+  static BottomNavigationBarThemeData _buildNavTheme() {
+    return BottomNavigationBarThemeData(
+      backgroundColor: ProjectColors.noirViolet,
+      selectedItemColor: ProjectColors.lavenderEcho,
+      unselectedItemColor: ProjectColors.gray.withOpacity(0.6),
+      type: BottomNavigationBarType.fixed,
+      selectedIconTheme: const IconThemeData(size: 28),
+      unselectedIconTheme: const IconThemeData(size: 24),
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      elevation: 0,
     );
   }
 }
@@ -35,6 +53,8 @@ class ProjectColorsExtension {
   Color get grayDark => ProjectColors.grayDark;
 
   Color get noirVioletLight => ProjectColors.noirVioletLight;
+
+  Color get noirVioletBack => ProjectColors.noirVioletBack;
 
   Color get noirViolet => ProjectColors.noirViolet;
 

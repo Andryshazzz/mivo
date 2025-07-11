@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-class TaskCard extends StatelessWidget {
+class TaskCard extends StatefulWidget {
   final String title;
   final String description;
-  final DateTime createdAt;
+  final String createdAt;
   final TaskMarker? marker;
   final bool isCompleted;
   final ValueChanged<bool?> onCheckboxChanged;
@@ -19,74 +19,80 @@ class TaskCard extends StatelessWidget {
     required this.onCheckboxChanged,
   });
 
-  String _formatDate(DateTime date) {
-    return '${date.day}.${date.month}.${date.year} ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
-  }
+  @override
+  State<TaskCard> createState() => _TaskCardState();
+}
 
+class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: context.colors.noirViolet,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: context.colors.lavenderEcho.withOpacity(0.2),
-          width: 1,
-        ),
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  CustomCheckbox(
-                    value: isCompleted,
-                    onChanged: onCheckboxChanged,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      title,
-                      style: context.theme.textTheme.bodyLarge?.copyWith(
-                        color: context.colors.gray,
-                        fontWeight: FontWeight.w600,
-                        decoration:
-                            isCompleted ? TextDecoration.lineThrough : null,
+    return Stack(children: [
+      GestureDetector(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: context.colors.noirVioletBack,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Row(
+              children: [
+                CustomCheckbox(
+                  value: widget.isCompleted,
+                  onChanged: widget.onCheckboxChanged,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 1,
+                    children: [
+                      Text(
+                        widget.createdAt,
+                        style: context.theme.textTheme.titleMedium!.copyWith(
+                          color: context.colors.gray,
+                        ),
                       ),
-                    ),
+                      Text(
+                        widget.title,
+                        style: context.theme.textTheme.headlineMedium,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        widget.description,
+                        style: context.theme.textTheme.titleMedium!.copyWith(
+                          color: context.colors.gray,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              if (description.isNotEmpty) ...[
-                const SizedBox(height: 8),
-                Text(
-                  description,
-                  style: context.theme.textTheme.bodyMedium?.copyWith(
-                    color: context.colors.gray.withOpacity(0.7),
-                    decoration: isCompleted ? TextDecoration.lineThrough : null,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Center(
+                  child: Icon(
+                    Icons.person,
                   ),
                 ),
               ],
-              const SizedBox(height: 8),
-              Text(
-                _formatDate(createdAt),
-                style: context.theme.textTheme.bodySmall?.copyWith(
-                  color: context.colors.gray.withOpacity(0.5),
-                ),
-              ),
-            ],
-          ),
-          if (marker != null)
-            Positioned(
-              top: 0,
-              right: 0,
-              child: marker!,
             ),
-        ],
+          ),
+        ),
       ),
-    );
+      if (widget.marker != null)
+        Positioned(
+          top: 0,
+          right: 20,
+          child: widget.marker!,
+        ),
+    ]);
   }
 }

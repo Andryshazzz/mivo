@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auth_test/data/api_client.dart' as _i551;
 import 'package:auth_test/repos/auth_repo.dart' as _i246;
-import 'package:auth_test/screens/auth/controller/auth_bloc.dart' as _i419;
+import 'package:auth_test/screens/auth/controller/auth_bloc.dart' as _i97;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -26,8 +26,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i246.AuthRepository>(
       () => _i246.AuthRepository(apiClient: gh<_i551.ApiClient>()),
     );
-    gh.factory<_i419.AuthBloc>(
-      () => _i419.AuthBloc(authRepository: gh<_i246.AuthRepository>()),
+    gh.factory<_i97.AuthBloc>(
+      () => _i97.AuthBloc(authRepository: gh<_i246.AuthRepository>()),
     );
     return this;
   }

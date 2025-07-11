@@ -20,26 +20,27 @@ class TaskMarker extends StatelessWidget {
   Color _getBackgroundColor(BuildContext context) {
     switch (color) {
       case MarkerColor.red:
-        return context.colors.red.withOpacity(0.2);
+        return context.colors.red;
       case MarkerColor.green:
-        return context.colors.green.withOpacity(0.2);
+        return context.colors.green;
       case MarkerColor.orange:
-        return context.colors.orange.withOpacity(0.2);
+        return context.colors.orange;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: _getBackgroundColor(context),
-        borderRadius: BorderRadius.circular(4),
       ),
-      child: Text(
-        text,
-        style: context.theme.textTheme.bodySmall?.copyWith(
-          fontWeight: FontWeight.w600,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: Text(
+          text,
+          style: context.theme.textTheme.bodySmall?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

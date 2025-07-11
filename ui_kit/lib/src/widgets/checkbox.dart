@@ -15,16 +15,19 @@ class CustomCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Checkbox(
-      value: value,
-      onChanged: onChanged,
-      activeColor: activeColor ?? context.colors.lavenderEcho,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
-      side: BorderSide(
-        color: context.colors.lavenderEcho.withOpacity(0.5),
-        width: 1.5,
+    return Transform.scale(
+      scale: 1.2,
+      child: Checkbox(
+        value: value,
+        onChanged: onChanged,
+        activeColor: activeColor ?? context.colors.lavenderEcho,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        side: BorderSide(
+          color: context.colors.lavenderEcho.withOpacity(0.2),
+          width: 1.5,
+        ),
       ),
     );
   }

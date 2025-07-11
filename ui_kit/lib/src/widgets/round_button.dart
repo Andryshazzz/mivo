@@ -10,18 +10,19 @@ class RoundButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: 48,
-        height: 48,
+      child: DecoratedBox(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
             color: context.colors.lavenderEcho.withOpacity(0.2),
           ),
         ),
-        child: Center(
-          child: Icon(
-            Icons.person,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Icon(
+              Icons.person,
+            ),
           ),
         ),
       ),
