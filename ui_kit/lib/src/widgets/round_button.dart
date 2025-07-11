@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ui_kit/src/theme.dart';
 
 class RoundButton extends StatelessWidget {
+  final String icon;
   final VoidCallback onTap;
 
-  const RoundButton({super.key, required this.onTap});
+  const RoundButton({super.key, required this.onTap, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,9 @@ class RoundButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(
-            child: Icon(
-              Icons.person,
+            child: SvgPicture.asset(
+              icon,
+              height: 24,
             ),
           ),
         ),

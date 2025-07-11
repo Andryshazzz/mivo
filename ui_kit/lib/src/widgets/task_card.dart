@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 class TaskCard extends StatefulWidget {
@@ -27,63 +28,65 @@ class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      GestureDetector(
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: context.colors.noirVioletBack,
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              children: [
-                CustomCheckbox(
-                  value: widget.isCompleted,
-                  onChanged: widget.onCheckboxChanged,
+      DecoratedBox(
+        decoration: BoxDecoration(
+          color: context.colors.noirVioletBack,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            children: [
+              CustomCheckbox(
+                value: widget.isCompleted,
+                onChanged: widget.onCheckboxChanged,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  spacing: 1,
+                  children: [
+                    Text(
+                      widget.createdAt,
+                      style: context.theme.textTheme.titleMedium!.copyWith(
+                        color: context.colors.gray,
+                      ),
+                    ),
+                    Text(
+                      widget.title,
+                      style: context.theme.textTheme.headlineMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      widget.description,
+                      style: context.theme.textTheme.titleMedium!.copyWith(
+                        color: context.colors.gray,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 1,
-                    children: [
-                      Text(
-                        widget.createdAt,
-                        style: context.theme.textTheme.titleMedium!.copyWith(
-                          color: context.colors.gray,
-                        ),
-                      ),
-                      Text(
-                        widget.title,
-                        style: context.theme.textTheme.headlineMedium,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        widget.description,
-                        style: context.theme.textTheme.titleMedium!.copyWith(
-                          color: context.colors.gray,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Center(
+                child: SvgPicture.asset(
+                  context.icons.more,
+                  colorFilter: ColorFilter.mode(
+                    context.colors.gray,
+                    BlendMode.srcIn,
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Center(
-                  child: Icon(
-                    Icons.person,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

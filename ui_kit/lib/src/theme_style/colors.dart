@@ -6,6 +6,7 @@ class ProjectColors {
   static const grayDark = Color(0xFF2E2E2E);
   static const noirVioletLight = Color(0xFF16171E);
   static const noirVioletBack = Color(0xFF10101D);
+  static const noirVioletBackGradient = Color(0xFF111120);
   static const noirViolet = Color(0xFF090813);
   static const lavenderEcho = Color(0xFF8970EC);
   static const red = Color(0xFFB52939);

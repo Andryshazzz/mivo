@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_kit/src/theme_style/icons.dart';
 import 'package:ui_kit/src/theme_style/text_style.dart';
 
 import 'theme_style/colors.dart';
@@ -56,6 +57,8 @@ class ProjectColorsExtension {
 
   Color get noirVioletBack => ProjectColors.noirVioletBack;
 
+  Color get noirVioletBackGradient => ProjectColors.noirVioletBackGradient;
+
   Color get noirViolet => ProjectColors.noirViolet;
 
   Color get lavenderEcho => ProjectColors.lavenderEcho;
@@ -67,8 +70,26 @@ class ProjectColorsExtension {
   Color get green => ProjectColors.green;
 }
 
+class ProjectIconsExtension {
+  const ProjectIconsExtension();
+
+  String get tasks => ProjectIcons.tasks;
+
+  String get plan => ProjectIcons.plan;
+
+  String get user => ProjectIcons.user;
+
+  String get setting => ProjectIcons.setting;
+
+  String get trash => ProjectIcons.trash;
+
+  String get more => ProjectIcons.more;
+}
+
 extension ThemeShortcuts on BuildContext {
   ProjectColorsExtension get colors => const ProjectColorsExtension();
+
+  ProjectIconsExtension get icons => const ProjectIconsExtension();
 
   ThemeData get theme => AppTheme.themeOf(this);
 }
