@@ -10,3 +10,5 @@ export 'src/widgets/task_marker.dart';
 export 'src/widgets/checkbox.dart';
 export 'src/widgets/task_card.dart';
 export 'src/widgets/helpers/base_padding.dart';
+export 'src/widgets/category_selector.dart';
+export 'src/widgets/priority_selector.dart';

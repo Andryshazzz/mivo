@@ -84,6 +84,12 @@ class ProjectIconsExtension {
   String get trash => ProjectIcons.trash;
 
   String get more => ProjectIcons.more;
+
+  String get chevron_right => ProjectIcons.chevron_right;
+
+  String get chevron_left => ProjectIcons.chevron_left;
+
+  String get plus => ProjectIcons.plus;
 }
 
 extension ThemeShortcuts on BuildContext {

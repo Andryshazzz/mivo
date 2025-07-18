@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 import '../../app/router/routes.dart';
+
 class HomeScreen extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
 
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 64,
         height: 64,
         child: FloatingActionButton(
-          onPressed: () => context.go(Routes.create.path),
+          onPressed: () => context.push(Routes.create.path),
           backgroundColor: context.colors.lavenderEcho,
           shape: const CircleBorder(),
           child: const Icon(Icons.add, color: Colors.white),

@@ -2,34 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:ui_kit/src/theme.dart';
 
 class InputFormField extends StatelessWidget {
-  const InputFormField({super.key});
+  final String? hintText;
+  final String? Function(String? value)? validator;
+  final TextEditingController? controller;
+  final int? maxLength;
+  final int? maxLines;
+  final bool showCounter;
+
+  const InputFormField(
+      {super.key,
+      this.validator,
+      this.controller,
+      this.hintText,
+      this.maxLength,
+      this.showCounter = false,
+      this.maxLines});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: '+380',
+      validator: validator,
+      controller: controller,
+      maxLength: maxLength,
+      maxLines: maxLines,
       style: context.theme.textTheme.bodyLarge?.copyWith(
-        color: context.colors.gray,
         fontWeight: FontWeight.w600,
       ),
       cursorColor: context.colors.lavenderEcho,
       decoration: InputDecoration(
         filled: true,
         fillColor: context.colors.noirViolet,
-        // фон
+        hintText: hintText,
+        hintStyle: TextStyle(color: context.colors.gray),
         contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        counterText: showCounter ? null : '',
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
           borderSide:
               BorderSide(color: context.colors.lavenderEcho.withOpacity(0.2)),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: context.colors.lavenderEcho),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
         ),
       ),
       keyboardType: TextInputType.phone,
