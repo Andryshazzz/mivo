@@ -1,12 +1,13 @@
-import 'package:auth_test/app/router/router.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-@RoutePage()
+import '../../app/router/routes.dart';
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final StatefulNavigationShell navigationShell;
+
+  const HomeScreen({required this.navigationShell, super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,57 +16,54 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      routes: const [TaskRoute(), PlanRoute(), CreateTaskRoute(), AnyRoute()],
+    return Scaffold(
       extendBody: true,
+      body: widget.navigationShell,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: SizedBox(
         width: 64,
         height: 64,
         child: FloatingActionButton(
-          onPressed: () => context.tabsRouter.setActiveIndex(2),
+          onPressed: () => context.go(Routes.create.path),
           backgroundColor: context.colors.lavenderEcho,
           shape: const CircleBorder(),
           child: const Icon(Icons.add, color: Colors.white),
         ),
       ),
-      bottomNavigationBuilder: (context, tabRouter) {
-        final currentIndex = tabRouter.activeIndex;
-        return BottomAppBar(
-          color: context.colors.noirViolet,
-          shape: CustomNotchedShape(),
-          notchMargin: 10,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _NavBarIcon(
-                  icon: context.icons.tasks,
-                  isActive: currentIndex == 0,
-                  onTap: () => tabRouter.setActiveIndex(0),
-                ),
-                _NavBarIcon(
-                  icon: context.icons.plan,
-                  isActive: currentIndex == 1,
-                  onTap: () => tabRouter.setActiveIndex(1),
-                ),
-                const SizedBox(width: 48),
-                _NavBarIcon(
-                  icon: context.icons.user,
-                  isActive: currentIndex == 3,
-                  onTap: () => tabRouter.setActiveIndex(3),
-                ),
-                _NavBarIcon(
-                  icon: context.icons.plan,
-                  isActive: currentIndex == 4,
-                  onTap: () => tabRouter.setActiveIndex(4),
-                ),
-              ],
-            ),
+      bottomNavigationBar: BottomAppBar(
+        color: context.colors.noirViolet,
+        shape: CustomNotchedShape(),
+        notchMargin: 10,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _NavBarIcon(
+                icon: context.icons.tasks,
+                isActive: widget.navigationShell.currentIndex == 0,
+                onTap: () => widget.navigationShell.goBranch(0),
+              ),
+              _NavBarIcon(
+                icon: context.icons.plan,
+                isActive: widget.navigationShell.currentIndex == 1,
+                onTap: () => widget.navigationShell.goBranch(1),
+              ),
+              const SizedBox(width: 48),
+              _NavBarIcon(
+                icon: context.icons.user,
+                isActive: widget.navigationShell.currentIndex == 3,
+                onTap: () => widget.navigationShell.goBranch(3),
+              ),
+              _NavBarIcon(
+                icon: context.icons.plan,
+                isActive: widget.navigationShell.currentIndex == 4,
+                onTap: () => widget.navigationShell.goBranch(4),
+              ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

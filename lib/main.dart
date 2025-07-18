@@ -19,13 +19,11 @@ class MivoApp extends StatefulWidget {
 }
 
 class _MivoAppState extends State<MivoApp> {
-  final _router = AppRouter();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       theme: AppTheme.darkTheme,
-      routerConfig: _router.config(),
+      routerConfig: AppRouter.router,
     );
   }
 }

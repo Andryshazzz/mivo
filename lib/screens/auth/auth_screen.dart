@@ -1,11 +1,9 @@
-import 'package:auto_route/annotations.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-import '../../app/router/router.dart';
+import '../../app/router/routes.dart';
 
-@RoutePage()
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
 
@@ -42,7 +40,7 @@ class AuthScreen extends StatelessWidget {
               CustomButton(
                 text: 'Continue',
                 onPressed: () {
-                  context.router.replace(const HomeRoute());
+                  context.go(Routes.tasks.path);
                 },
               ),
               const SizedBox(height: 20),

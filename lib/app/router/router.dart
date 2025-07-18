@@ -1,40 +1,85 @@
-import 'package:auth_test/screens/plan/plan_screen.dart';
-import 'package:auth_test/screens/task/task_screen.dart';
-import 'package:auth_test/screens/auth/auth_screen.dart';
-import 'package:auth_test/screens/create_task/create_task_screen.dart';
-import 'package:auth_test/screens/any/any_screen.dart';
-import 'package:auth_test/screens/home/home_screen.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:auth_test/app/router/routes.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-part 'router.gr.dart';
+import '../../screens/auth/auth_screen.dart';
+import '../../screens/create_task/create_task_screen.dart';
+import '../../screens/home/home_screen.dart';
+import '../../screens/plan/plan_screen.dart';
+import '../../screens/task/task_screen.dart';
 
-@AutoRouterConfig()
-class AppRouter extends RootStackRouter {
+final GlobalKey<NavigatorState> _rootKey = GlobalKey<NavigatorState>();
+
+class Observer extends NavigatorObserver {
   @override
-  List<AutoRoute> get routes => [
-    AutoRoute(page: AuthRoute.page, initial: true),
-    AutoRoute(
-      page: HomeRoute.page,
-      children: [
-        AutoRoute(page: TaskRoute.page),
-        AutoRoute(page: PlanRoute.page),
-        AutoRoute(page: CreateTaskRoute.page),
-        AutoRoute(page: AnyRoute.page),
-      ],
-    ),
-  ];
+  void didPop(Route route, Route? previousRoute) {
+    super.didPop(route, previousRoute);
+    final focus = FocusManager.instance.primaryFocus;
+    focus?.unfocus();
+  }
 }
 
-// для зависимостей в будущем
-//https://youtu.be/nn9gmFcEFM0?si=4qyO3PoZSiybT0Bs
-// final _tabsNavigator = AutoRoute(
-//     page: TabsWrapperRoute.pagem children: [_mainNavigator, ...]);
+final class AppRouter {
+  AppRouter._();
 
-// final _mainNavigator = AutoRoute(page:
-//   , children: [
-//     AutoRoute(page: TaskRoute.page),
-//   ],
-// );
-//
-// final _lanNavigator = AutoRoute(
-//     page: page, children: [AutoRoute(page: PlanRoute.page),]);
+  static GoRouter get router => _router;
+
+  static final GoRouter _router = GoRouter(
+    navigatorKey: _rootKey,
+    observers: [Observer()],
+    debugLogDiagnostics: kDebugMode,
+    initialLocation: Routes.auth.path,
+    routes: [
+      GoRoute(
+        path: Routes.auth.path,
+        name: Routes.auth.name,
+        builder: (_, __) => const AuthScreen(),
+      ),
+      StatefulShellRoute.indexedStack(
+        builder:
+            (_, __, navigationShell) =>
+                HomeScreen(navigationShell: navigationShell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.tasks.path,
+                name: Routes.tasks.name,
+                builder: (_, __) => const TaskScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.plan.path,
+                name: Routes.plan.name,
+                builder: (_, __) => const PlanScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Routes.create.path,
+        name: Routes.create.name,
+        builder: (_, __) => const CreateTaskScreen(),
+      ),
+    ],
+  );
+}
+
+class HomeScreenWrapper extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
+
+  const HomeScreenWrapper({required this.navigationShell, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: navigationShell,
+      bottomNavigationBar: const BottomAppBar(),
+    );
+  }
+}

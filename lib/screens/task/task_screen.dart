@@ -1,10 +1,7 @@
-import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-@RoutePage()
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
 
