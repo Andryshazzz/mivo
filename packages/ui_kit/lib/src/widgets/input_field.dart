@@ -50,7 +50,6 @@ class InputFormField extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
       ),
-      keyboardType: TextInputType.phone,
     );
   }
 }

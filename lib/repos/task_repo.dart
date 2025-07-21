@@ -1,22 +1,23 @@
 import 'package:db/db/db.dart';
-import 'package:drift/drift.dart' show Value;
+import 'package:injectable/injectable.dart';
 
+import '../data/source/local/db.dart';
+
+@singleton
 class TodoRepository {
-  final AppDatabase db;
+  final Database db;
 
-  TodoRepository(this.db);
+  TodoRepository({required this.db});
 
-  Stream<List<TodoCardData>> watchAll() {
-    return db.select(db.todoCard).watch();
+  Stream<List<TodoCardData>> getTasks() {
+    return db.getTasks();
   }
 
   Future<void> addTodo(TodoCardCompanion entry) async {
-    await db.into(db.todoCard).insert(entry);
+    await db.addTask(entry);
   }
 
   Future<void> toggleComplete(int id, bool isCompleted) async {
-    await (db.update(db.todoCard)..where(
-      (tbl) => tbl.id.equals(id),
-    )).write(TodoCardCompanion(isCompleted: Value(isCompleted)));
+    await db.toggleComplete(id, isCompleted);
   }
 }

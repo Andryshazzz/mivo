@@ -1,3 +1,4 @@
+import 'package:auth_test/app/dependencies/dependencies.dart';
 import 'package:auth_test/app/router/routes.dart';
 import 'package:db/db/db.dart';
 import 'package:flutter/foundation.dart';
@@ -14,7 +15,6 @@ import '../../screens/task/controller/task_bloc.dart';
 import '../../screens/task/task_screen.dart';
 
 final GlobalKey<NavigatorState> _rootKey = GlobalKey<NavigatorState>();
-final repo = TodoRepository(AppDatabase());
 
 class Observer extends NavigatorObserver {
   @override
@@ -54,7 +54,9 @@ final class AppRouter {
                 builder:
                     (context, state) => BlocProvider(
                       create:
-                          (context) => TaskBloc(repo: repo)..add(LoadTodos()),
+                          (context) =>
+                              TaskBloc(repo: getIt<TodoRepository>())
+                                ..add(LoadTodos()),
                       child: const TaskScreen(),
                     ),
               ),
@@ -76,7 +78,7 @@ final class AppRouter {
         name: Routes.create.name,
         builder:
             (context, state) => BlocProvider(
-              create: (context) => TaskBloc(repo: repo),
+              create: (context) => TaskBloc(repo: getIt<TodoRepository>()),
               child: const CreateTaskScreen(),
             ),
       ),
