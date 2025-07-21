@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../data/api_client.dart';
+import '../data/source/network/api_client.dart';
 
 @singleton
 class AuthRepository {

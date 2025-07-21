@@ -1,12 +1,16 @@
 import 'package:auth_test/app/router/routes.dart';
+import 'package:db/db/db.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../repos/task_repo.dart';
 import '../../screens/auth/auth_screen.dart';
 import '../../screens/create_task/create_task_screen.dart';
 import '../../screens/home/home_screen.dart';
 import '../../screens/plan/plan_screen.dart';
+import '../../screens/task/controller/task_bloc.dart';
 import '../../screens/task/task_screen.dart';
 
 final GlobalKey<NavigatorState> _rootKey = GlobalKey<NavigatorState>();
@@ -46,7 +50,14 @@ final class AppRouter {
               GoRoute(
                 path: Routes.tasks.path,
                 name: Routes.tasks.name,
-                builder: (_, __) => const TaskScreen(),
+                builder:
+                    (context, state) => BlocProvider(
+                      create:
+                          (context) =>
+                              TaskBloc(repo: TodoRepository(AppDatabase()))
+                                ..add(LoadTodos()),
+                      child: const TaskScreen(),
+                    ),
               ),
             ],
           ),

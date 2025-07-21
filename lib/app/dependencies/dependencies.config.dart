@@ -9,7 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auth_test/data/api_client.dart' as _i551;
+import 'package:auth_test/data/source/network/api_client.dart' as _i551;
 import 'package:auth_test/repos/auth_repo.dart' as _i246;
 import 'package:auth_test/screens/auth/controller/auth_bloc.dart' as _i97;
 import 'package:get_it/get_it.dart' as _i174;

@@ -1,0 +1,21 @@
+name: db
+description: db for the main app
+version: 0.0.1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+flutter:
+  uses-material-design: true
+
+dependencies:
+  drift: ^2.28.0
+  drift_flutter: ^0.2.4
+  path_provider: ^2.1.5
+  path: ^1.8.3
+#  uuid: ^3.0.7
+
+dev_dependencies:
+  drift_dev: ^2.28.1-dev.0
+  build_runner: ^2.6.0-dev.1

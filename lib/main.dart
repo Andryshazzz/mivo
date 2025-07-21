@@ -49,6 +49,6 @@ String? _customFormatter(LogMessage log) {
   );
 
   return '[$prefix]'
-      '${_timeFormat(log.timestamp)}'
-      '| ${log.message}';
+      ' ${_timeFormat(log.timestamp)}'
+      ' | ${log.message}';
 }

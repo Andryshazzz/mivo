@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:ui_kit/ui_kit.dart';
+
+import 'controller/task_bloc.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -10,8 +13,6 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  bool _isChecked = false;
-
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
@@ -78,29 +79,44 @@ class _TaskScreenState extends State<TaskScreen> {
               ),
               Expanded(
                 child: AppPadding(
-                  child: ListView.separated(
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return TaskCard(
-                        title: 'Task $index',
-                        description: 'Task description $index',
-                        createdAt: DateFormat(
-                          'dd.MM.yyyy',
-                        ).format(DateTime.now()),
-                        marker: const TaskMarker(
-                          text: 'T',
-                          color: MarkerColor.green,
-                        ),
-                        isCompleted: _isChecked,
-                        onCheckboxChanged: (newValue) {
-                          setState(() {
-                            _isChecked = newValue ?? false;
-                          });
+                  child: BlocBuilder<TaskBloc, TaskState>(
+                    builder: (context, state) {
+                      final todos = state.todos;
+                      if (state.todos.isEmpty) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return ListView.separated(
+                        itemCount: todos.length,
+                        itemBuilder: (context, index) {
+                          return TaskCard(
+                            title: todos[index].name,
+                            description: todos[index].description ?? '',
+                            createdAt: DateFormat(
+                              'dd.MM.yyyy',
+                            ).format(todos[index].createdAt),
+                            marker: TaskMarker(
+                              text:
+                                  todos[index].category
+                                      ?.substring(0, 1)
+                                      .toUpperCase() ??
+                                  '?',
+                              color: MarkerColor.green,
+                            ),
+                            isCompleted: todos[index].isCompleted,
+                            onCheckboxChanged: (newValue) {
+                              context.read<TaskBloc>().add(
+                                ToggleTodoComplete(
+                                  todos[index].id,
+                                  newValue ?? false,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: 15);
                         },
                       );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(height: 15);
                     },
                   ),
                 ),
