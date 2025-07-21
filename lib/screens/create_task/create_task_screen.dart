@@ -1,6 +1,11 @@
+import 'package:db/db/db.dart';
+import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ui_kit/ui_kit.dart';
+
+import '../task/controller/task_bloc.dart';
 
 class CreateTaskScreen extends StatefulWidget {
   const CreateTaskScreen({super.key});
@@ -10,7 +15,28 @@ class CreateTaskScreen extends StatefulWidget {
 }
 
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
-  Priority _selectedPriority = Priority.high;
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+
+  String? _selectedCategory;
+
+  int _priorityToInt(Priority priority) {
+    switch (priority) {
+      case Priority.low:
+        return 1;
+      case Priority.medium:
+        return 2;
+      case Priority.high:
+        return 3;
+    }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +75,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const InputFormField(
+                  InputFormField(
+                    controller: _titleController,
                     hintText: 'Enter title here',
                     maxLength: 30,
                   ),
@@ -71,7 +98,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const InputFormField(
+                  InputFormField(
+                    controller: _descriptionController,
                     hintText: 'Enter description here',
                     maxLength: 200,
                     maxLines: 6,
@@ -104,9 +132,9 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
             child: AppPadding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               child: PrioritySelector(
-                selected: _selectedPriority,
+                selected: Priority.high,
                 onChanged: (value) {
-                  setState(() => _selectedPriority = value);
+                  setState(() => Priority.low);
                 },
               ),
             ),
@@ -115,7 +143,32 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       ),
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.all(10),
-        child: CustomButton(text: 'Continue', onPressed: () {}),
+        child: CustomButton(
+          text: 'Continue',
+          onPressed: () {
+            final title = _titleController.text.trim();
+            final description = _descriptionController.text.trim();
+
+            if (title.isEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Title cannot be empty')),
+              );
+              return;
+            }
+
+            final todo = TodoCardCompanion(
+              name: Value(title),
+              description: Value(description.isNotEmpty ? description : null),
+              category: Value(_selectedCategory),
+              priority: Value(_priorityToInt(Priority.low)),
+              createdAt: Value(DateTime.now()),
+              isCompleted: const Value(false),
+            );
+
+            context.read<TaskBloc>().add(AddTodo(todo));
+            context.pop();
+          },
+        ),
       ),
     );
   }

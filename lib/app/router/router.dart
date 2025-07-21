@@ -14,6 +14,7 @@ import '../../screens/task/controller/task_bloc.dart';
 import '../../screens/task/task_screen.dart';
 
 final GlobalKey<NavigatorState> _rootKey = GlobalKey<NavigatorState>();
+final repo = TodoRepository(AppDatabase());
 
 class Observer extends NavigatorObserver {
   @override
@@ -53,9 +54,7 @@ final class AppRouter {
                 builder:
                     (context, state) => BlocProvider(
                       create:
-                          (context) =>
-                              TaskBloc(repo: TodoRepository(AppDatabase()))
-                                ..add(LoadTodos()),
+                          (context) => TaskBloc(repo: repo)..add(LoadTodos()),
                       child: const TaskScreen(),
                     ),
               ),
@@ -75,7 +74,11 @@ final class AppRouter {
       GoRoute(
         path: Routes.create.path,
         name: Routes.create.name,
-        builder: (_, __) => const CreateTaskScreen(),
+        builder:
+            (context, state) => BlocProvider(
+              create: (context) => TaskBloc(repo: repo),
+              child: const CreateTaskScreen(),
+            ),
       ),
     ],
   );

@@ -5,7 +5,7 @@ sealed class TaskEvent {}
 final class LoadTodos extends TaskEvent {}
 
 final class AddTodo extends TaskEvent {
-  final TodoCardData todo;
+  final TodoCardCompanion todo;
 
   AddTodo(this.todo);
 }

@@ -28,7 +28,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onAdd(AddTodo event, Emitter<TaskState> emit) async {
-    await repo.addTodo(event.todo as TodoCardCompanion);
+    await repo.addTodo(event.todo);
   }
 
   Future<void> _onToggle(
