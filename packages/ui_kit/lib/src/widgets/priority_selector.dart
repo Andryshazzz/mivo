@@ -1,14 +1,40 @@
 import 'package:flutter/material.dart';
 
-enum Priority { high, medium, low }
+enum Priority {
+  high,
+  medium,
+  low;
+
+  int get toInt {
+    switch (this) {
+      case Priority.low:
+        return 1;
+      case Priority.medium:
+        return 2;
+      case Priority.high:
+        return 3;
+    }
+  }
+
+  String get toCategoryString {
+    switch (this) {
+      case Priority.low:
+        return 'L';
+      case Priority.medium:
+        return 'M';
+      case Priority.high:
+        return 'H';
+    }
+  }
+}
 
 class PrioritySelector extends StatefulWidget {
-  final Priority selected;
-  final ValueChanged<Priority> onChanged;
+  final Priority? selected;
+  final ValueChanged<Priority?> onChanged;
 
   const PrioritySelector({
     super.key,
-    required this.selected,
+    this.selected,
     required this.onChanged,
   });
 
@@ -32,7 +58,13 @@ class _PrioritySelectorState extends State<PrioritySelector> {
         final (label, color) = entry.value;
 
         return GestureDetector(
-          onTap: () => widget.onChanged(entry.key),
+          onTap: () {
+            if (isSelected) {
+              widget.onChanged(null);
+            } else {
+              widget.onChanged(entry.key);
+            }
+          },
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

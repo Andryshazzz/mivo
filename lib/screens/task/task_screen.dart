@@ -13,6 +13,17 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
+  MarkerColor? _priorityToColor(int priority) {
+    switch (priority) {
+      case 1:
+        return MarkerColor.green;
+      case 2:
+        return MarkerColor.orange;
+      case 3:
+        return MarkerColor.red;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
@@ -94,14 +105,20 @@ class _TaskScreenState extends State<TaskScreen> {
                             createdAt: DateFormat(
                               'dd.MM.yyyy',
                             ).format(todos[index].createdAt),
-                            marker: TaskMarker(
-                              text:
-                                  todos[index].category
-                                      ?.substring(0, 1)
-                                      .toUpperCase() ??
-                                  '?',
-                              color: MarkerColor.green,
-                            ),
+                            marker:
+                                todos[index].priority != null
+                                    ? TaskMarker(
+                                      text:
+                                          todos[index].category
+                                              ?.substring(0, 1)
+                                              .toUpperCase() ??
+                                          '?',
+                                      color:
+                                          _priorityToColor(
+                                            todos[index].priority!,
+                                          )!,
+                                    )
+                                    : null,
                             isCompleted: todos[index].isCompleted,
                             onCheckboxChanged: (newValue) {
                               context.read<TaskBloc>().add(

@@ -18,18 +18,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
+  Priority? _priorityValue = Priority.low;
   String? _selectedCategory;
-
-  int _priorityToInt(Priority priority) {
-    switch (priority) {
-      case Priority.low:
-        return 1;
-      case Priority.medium:
-        return 2;
-      case Priority.high:
-        return 3;
-    }
-  }
 
   @override
   void dispose() {
@@ -132,9 +122,12 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
             child: AppPadding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               child: PrioritySelector(
-                selected: Priority.high,
+                selected: _priorityValue,
                 onChanged: (value) {
-                  setState(() => Priority.low);
+                  setState(() {
+                    _priorityValue = value;
+                    _selectedCategory = value?.toCategoryString;
+                  });
                 },
               ),
             ),
@@ -160,7 +153,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               name: Value(title),
               description: Value(description.isNotEmpty ? description : null),
               category: Value(_selectedCategory),
-              priority: Value(_priorityToInt(Priority.low)),
+              priority: Value(_priorityValue?.toInt),
               createdAt: Value(DateTime.now()),
               isCompleted: const Value(false),
             );
