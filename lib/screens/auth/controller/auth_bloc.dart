@@ -1,73 +1,31 @@
+import 'package:auth_test/repos/user_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../repos/auth_repo.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository authRepository;
+  final UserRepository userRepository;
 
-  AuthBloc({required this.authRepository}) : super(AuthState()) {
-    on<SendCodeEvent>(_onSendCode);
-    on<VerifyCodeEvent>(_onVerifyCode);
-    // on<RefreshTokenEvent>(_onRefreshToken);
+  AuthBloc({required this.userRepository}) : super(AuthState()) {
+    on<SaveUserNameEvent>(_saveUserName);
+    on<CheckAuthEvent>(_checkAuth);
   }
 
-  Future<void> _onSendCode(SendCodeEvent event, Emitter<AuthState> emit) async {
-    emit(state.copyWith(isLoading: true));
-    try {
-      await authRepository.sendCode(event.email);
-      emit(state.copyWith(isLoading: false));
-    } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
-    }
-  }
-
-  Future<void> _onVerifyCode(
-    VerifyCodeEvent event,
+  Future<void> _saveUserName(
+    SaveUserNameEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true, error: null));
-    try {
-      final tokens = await authRepository.verifyCode(event.email, event.code);
-      print('jwt: ${tokens['jwt']}');
-      print('refresh: ${tokens['refresh_token']}');
-      final jwtToken = await authRepository.refreshToken(
-        tokens['refresh_token']!,
-      );
-      print('refreshTTTT: ${jwtToken['jwt']}');
-      emit(
-        state.copyWith(
-          isLoading: false,
-          isAuthorized: true,
-          jwtToken: jwtToken['jwt'],
-          refreshToken: tokens['refresh_token'],
-          // userId: userId,
-        ),
-      );
-    } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
-    }
+    await userRepository.saveUserName(event.name);
   }
 
-  // Future<void> _onRefreshToken(
-  //   RefreshTokenEvent event,
-  //   Emitter<AuthState> emit,
-  // ) async {
-  //   emit(state.copyWith(isLoading: true, error: null));
-  //   try {
-  //     final tokens = await authRepository.refreshToken(event.refreshToken);
-  //     emit(
-  //       state.copyWith(
-  //         isLoading: false,
-  //         jwtToken: tokens['jwt'],
-  //         refreshToken: tokens['refresh_token'],
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     emit(state.copyWith(isLoading: false, error: e.toString()));
-  //   }
-  // }
+  Future<void> _checkAuth(CheckAuthEvent event, Emitter<AuthState> emit) async {
+    final userName = await userRepository.getUserName();
+    if (userName != null) {
+      emit(state.copyWith(userName: userName));
+    } else {
+      emit(state.copyWith(userName: 'ой'));
+    }
+  }
 }

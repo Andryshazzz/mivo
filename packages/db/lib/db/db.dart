@@ -5,9 +5,11 @@ import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import '../tables/user_table.dart';
+
 part 'db.g.dart';
 
-@DriftDatabase(tables: [TodoCard])
+@DriftDatabase(tables: [TodoCard, User])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

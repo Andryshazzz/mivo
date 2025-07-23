@@ -1,35 +1,9 @@
 class AuthState {
-  final bool isLoading;
-  final String? error;
-  final bool isAuthorized;
-  final String? userId;
-  final String? refreshToken;
-  final String? jwtToken;
+  final String? userName;
 
-  AuthState({
-    this.isLoading = false,
-    this.error,
-    this.isAuthorized = false,
-    this.userId,
-    this.refreshToken,
-    this.jwtToken,
-  });
+  AuthState({this.userName});
 
-  AuthState copyWith({
-    bool? isLoading,
-    String? error,
-    bool? isAuthorized,
-    String? userId,
-    String? refreshToken,
-    String? jwtToken,
-  }) {
-    return AuthState(
-      isLoading: isLoading ?? this.isLoading,
-      error: error,
-      isAuthorized: isAuthorized ?? this.isAuthorized,
-      userId: userId ?? this.userId,
-      refreshToken: refreshToken ?? this.refreshToken,
-      jwtToken: jwtToken ?? this.jwtToken,
-    );
+  AuthState copyWith({String? userName}) {
+    return AuthState(userName: userName ?? this.userName);
   }
 }

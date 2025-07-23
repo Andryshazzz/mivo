@@ -23,4 +23,17 @@ class Database {
   Future<void> deleteTask(int id) async {
     await (db.delete(db.todoCard)..where((tbl) => tbl.id.equals(id))).go();
   }
+
+  Future<void> saveUserName(String name) async {
+    await db.into(db.user).insert(UserCompanion(name: Value(name)));
+  }
+
+  Future<String?> getUserName() async {
+    final user = await db.select(db.user).getSingleOrNull();
+    return user?.name;
+  }
+
+  Future<bool> hasUser() async {
+    return await getUserName() != null;
+  }
 }

@@ -11,8 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auth_test/data/source/local/db.dart' as _i824;
 import 'package:auth_test/data/source/network/api_client.dart' as _i772;
-import 'package:auth_test/repos/auth_repo.dart' as _i246;
 import 'package:auth_test/repos/task_repo.dart' as _i613;
+import 'package:auth_test/repos/user_repo.dart' as _i1042;
 import 'package:auth_test/screens/auth/controller/auth_bloc.dart' as _i97;
 import 'package:auth_test/screens/task/controller/task_bloc.dart' as _i300;
 import 'package:get_it/get_it.dart' as _i174;
@@ -30,14 +30,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i613.TodoRepository>(
       () => _i613.TodoRepository(db: gh<_i824.Database>()),
     );
+    gh.singleton<_i1042.UserRepository>(
+      () => _i1042.UserRepository(db: gh<_i824.Database>()),
+    );
     gh.factory<_i300.TaskBloc>(
       () => _i300.TaskBloc(repo: gh<_i613.TodoRepository>()),
     );
-    gh.singleton<_i246.AuthRepository>(
-      () => _i246.AuthRepository(apiClient: gh<_i772.ApiClient>()),
-    );
     gh.factory<_i97.AuthBloc>(
-      () => _i97.AuthBloc(authRepository: gh<_i246.AuthRepository>()),
+      () => _i97.AuthBloc(userRepository: gh<_i1042.UserRepository>()),
     );
     return this;
   }
