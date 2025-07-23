@@ -18,6 +18,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc({required this.repo}) : super(TaskState()) {
     on<LoadTodos>(_onLoad);
     on<AddTodo>(_onAdd);
+    on<DeleteTodo>(_onDelete);
     on<ToggleTodoComplete>(_onToggle);
     on<_TodosUpdated>(_onUpdated);
   }
@@ -27,6 +28,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     _subscription = repo.getTasks().listen((todos) {
       add(_TodosUpdated(todos));
     });
+  }
+
+  Future<void> _onDelete(DeleteTodo event, Emitter<TaskState> emit) async {
+    await repo.deleteTask(event.id);
   }
 
   Future<void> _onAdd(AddTodo event, Emitter<TaskState> emit) async {

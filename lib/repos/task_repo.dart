@@ -20,4 +20,8 @@ class TodoRepository {
   Future<void> toggleComplete(int id, bool isCompleted) async {
     await db.toggleComplete(id, isCompleted);
   }
+
+  Future<void> deleteTask(int id) async {
+    await db.deleteTask(id);
+  }
 }

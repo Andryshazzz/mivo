@@ -128,6 +128,14 @@ class _TaskScreenState extends State<TaskScreen> {
                                 ),
                               );
                             },
+                            onSelected: (value) {
+                              if (value == 'edit') {}
+                              if (value == 'delete') {
+                                context.read<TaskBloc>().add(
+                                  DeleteTodo(todos[index].id),
+                                );
+                              }
+                            },
                           );
                         },
                         separatorBuilder: (context, index) {

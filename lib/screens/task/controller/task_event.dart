@@ -10,6 +10,12 @@ final class AddTodo extends TaskEvent {
   AddTodo(this.todo);
 }
 
+final class DeleteTodo extends TaskEvent {
+  final int id;
+
+  DeleteTodo(this.id);
+}
+
 final class ToggleTodoComplete extends TaskEvent {
   final int id;
   final bool isCompleted;

@@ -16,9 +16,22 @@ class AppTheme {
     scaffoldBackgroundColor: ProjectColors.noirViolet,
     textTheme: _buildTextTheme(),
     bottomNavigationBarTheme: _buildNavTheme(),
+    popupMenuTheme: _buildPopupMenuTheme(),
   );
 
   static ThemeData themeOf(BuildContext context) => Theme.of(context);
+
+  static PopupMenuThemeData _buildPopupMenuTheme() {
+    return PopupMenuThemeData(
+      menuPadding: EdgeInsets.zero,
+      color: ProjectColors.noirViolet.withOpacity(0.1),
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      elevation: 3,
+    );
+  }
 
   static TextTheme _buildTextTheme() {
     return const TextTheme(
@@ -90,6 +103,8 @@ class ProjectIconsExtension {
   String get chevron_left => ProjectIcons.chevron_left;
 
   String get plus => ProjectIcons.plus;
+
+  String get pencil => ProjectIcons.pencil;
 }
 
 extension ThemeShortcuts on BuildContext {

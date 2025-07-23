@@ -19,4 +19,8 @@ class Database {
       (tbl) => tbl.id.equals(id),
     )).write(TodoCardCompanion(isCompleted: Value(isCompleted)));
   }
+
+  Future<void> deleteTask(int id) async {
+    await (db.delete(db.todoCard)..where((tbl) => tbl.id.equals(id))).go();
+  }
 }

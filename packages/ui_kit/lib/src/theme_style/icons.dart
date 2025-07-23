@@ -10,4 +10,5 @@ class ProjectIcons {
   static const String chevron_right =
       'packages/ui_kit/assets/icons/chevron_right.svg';
   static const String plus = 'packages/ui_kit/assets/icons/plus.svg';
+  static const String pencil = 'packages/ui_kit/assets/icons/pencil.svg';
 }

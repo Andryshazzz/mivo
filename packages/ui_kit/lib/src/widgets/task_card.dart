@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ui_kit/ui_kit.dart';
@@ -9,6 +11,7 @@ class TaskCard extends StatefulWidget {
   final TaskMarker? marker;
   final bool isCompleted;
   final ValueChanged<bool?> onCheckboxChanged;
+  final ValueChanged<String> onSelected;
 
   const TaskCard({
     super.key,
@@ -18,6 +21,7 @@ class TaskCard extends StatefulWidget {
     this.marker,
     this.isCompleted = false,
     required this.onCheckboxChanged,
+    required this.onSelected,
   });
 
   @override
@@ -78,11 +82,41 @@ class _TaskCardState extends State<TaskCard> {
                 width: 10,
               ),
               Center(
-                child: SvgPicture.asset(
-                  context.icons.more,
-                  colorFilter: ColorFilter.mode(
-                    context.colors.gray,
-                    BlendMode.srcIn,
+                child: PopupMenuButton<String>(
+                  onSelected: widget.onSelected,
+                  itemBuilder: (BuildContext context) => [
+                    PopupMenuItem<String>(
+                      value: 'edit',
+                      child: Text('Edit task',
+                          style: context.theme.textTheme.titleMedium),
+                    ),
+                    const PopupMenuDivider(),
+                    PopupMenuItem<String>(
+                      value: 'delete',
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            context.icons.trash,
+                            height: 20,
+                            colorFilter: ColorFilter.mode(
+                                context.colors.red, BlendMode.srcIn),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text('Delete task',
+                              style: context.theme.textTheme.titleMedium
+                                  ?.copyWith(color: context.colors.red)),
+                        ],
+                      ),
+                    ),
+                  ],
+                  child: SvgPicture.asset(
+                    context.icons.more,
+                    colorFilter: ColorFilter.mode(
+                      context.colors.gray,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ),
