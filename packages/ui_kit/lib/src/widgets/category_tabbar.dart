@@ -68,7 +68,7 @@ class _CategoryTabBarState extends State<CategoryTabBar> {
           bottom: 0,
           width: 32,
           child: IgnorePointer(
-            child: Container(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,

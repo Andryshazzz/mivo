@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () => context.push(Routes.create.path),
           backgroundColor: context.colors.lavenderEcho,
           shape: const CircleBorder(),
-          child: const Icon(Icons.add, color: Colors.white),
+          child: Icon(Icons.add, color: context.colors.white),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -53,13 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(width: 48),
               _NavBarIcon(
                 icon: context.icons.user,
-                isActive: widget.navigationShell.currentIndex == 3,
-                onTap: () => widget.navigationShell.goBranch(3),
+                isActive: widget.navigationShell.currentIndex == 2,
+                onTap: () => widget.navigationShell.goBranch(2),
               ),
               _NavBarIcon(
                 icon: context.icons.plan,
-                isActive: widget.navigationShell.currentIndex == 4,
-                onTap: () => widget.navigationShell.goBranch(4),
+                isActive: widget.navigationShell.currentIndex == 3,
+                onTap: () => widget.navigationShell.goBranch(3),
               ),
             ],
           ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:ui_kit/ui_kit.dart';
+import '../../app/router/routes.dart';
 import '../auth/controller/user_bloc.dart';
 import '../auth/controller/user_state.dart';
 import 'controller/task_bloc.dart';
@@ -39,9 +41,15 @@ class _TaskScreenState extends State<TaskScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        RoundButton(onTap: () {}, icon: context.icons.user),
+                        RoundButton(
+                          onTap: () => context.push(Routes.settings.path),
+                          icon: context.icons.user,
+                        ),
                         const DateSelector(),
-                        RoundButton(onTap: () {}, icon: context.icons.setting),
+                        RoundButton(
+                          onTap: () => context.push(Routes.settings.path),
+                          icon: context.icons.setting,
+                        ),
                       ],
                     ),
                   ),
