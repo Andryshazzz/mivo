@@ -25,11 +25,11 @@ class Database {
   }
 
   Future<void> saveUserName(String name) async {
-    await db.into(db.user).insert(UserCompanion(name: Value(name)));
+    await db.into(db.userName).insert(UserNameCompanion(name: Value(name)));
   }
 
   Future<String?> getUserName() async {
-    final user = await db.select(db.user).getSingleOrNull();
+    final user = await (db.select(db.userName)..limit(1)).getSingleOrNull();
     return user?.name;
   }
 

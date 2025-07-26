@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 import '../../app/router/routes.dart';
+import 'controller/auth_bloc.dart';
+import 'controller/auth_event.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -48,12 +51,15 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
               const SizedBox(height: 40),
-              const InputFormField(),
+              InputFormField(controller: _nameController),
               const SizedBox(height: 20),
               CustomButton(
                 text: 'Continue',
                 onPressed: () {
-                  context.go(Routes.tasks.path);
+                  final name = _nameController.text.trim();
+                  context.read<AuthBloc>().add(SaveUserNameEvent(name: name));
+                  context.read<AuthBloc>().add(CheckAuthEvent());
+                  if (mounted) context.go(Routes.tasks.path);
                 },
               ),
               const SizedBox(height: 20),

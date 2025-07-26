@@ -30,139 +30,172 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            backgroundColor: context.colors.noirViolet,
-            surfaceTintColor: Colors.transparent,
-            leading: AppPadding(
-              child: RoundButton(
-                onTap: () => context.pop(),
-                icon: context.icons.chevron_left,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: CustomScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            slivers: [
+              SliverAppBar(
+                pinned: true,
+                backgroundColor: context.colors.noirViolet,
+                surfaceTintColor: Colors.transparent,
+                leading: AppPadding(
+                  child: RoundButton(
+                    onTap: () => context.pop(),
+                    icon: context.icons.chevron_left,
+                  ),
+                ),
+                title: Text(
+                  'Create Task',
+                  style: context.theme.textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                centerTitle: true,
               ),
-            ),
-            title: Text(
-              'Create Task',
-              style: context.theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
+              SliverToBoxAdapter(
+                child: AppPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 10,
+                    children: [
+                      Text(
+                        'Title',
+                        style: context.theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      InputFormField(
+                        controller: _titleController,
+                        hintText: 'Enter title here',
+                        maxLength: 30,
+                        maxLines: 1,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            centerTitle: true,
+              SliverToBoxAdapter(
+                child: AppPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 10,
+                    children: [
+                      Text(
+                        'Description',
+                        style: context.theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      InputFormField(
+                        controller: _descriptionController,
+                        hintText: 'Enter description here',
+                        maxLength: 200,
+                        maxLines: 6,
+                        showCounter: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: AppPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 10,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 10,
+                    children: [
+                      Text(
+                        'Tags',
+                        style: context.theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const CategorySelector(),
+                    ],
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: AppPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 20,
+                  ),
+                  child: PrioritySelector(
+                    selected: _priorityValue,
+                    onChanged: (value) {
+                      setState(() {
+                        _priorityValue = value;
+                        _selectedCategory = value?.toCategoryString;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-          SliverToBoxAdapter(
-            child: AppPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                spacing: 10,
-                children: [
-                  Text(
-                    'Title',
-                    style: context.theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
+          bottomNavigationBar: AnimatedPadding(
+            padding: EdgeInsets.only(
+              bottom: bottomInset > 0 ? bottomInset + 10 : 10,
+              left: 10,
+              right: 10,
+              top: 10,
+            ),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+            child: SafeArea(
+              minimum: const EdgeInsets.all(10),
+              child: CustomButton(
+                text: 'Continue',
+                onPressed: () {
+                  final title = _titleController.text.trim();
+                  final description = _descriptionController.text.trim();
+
+                  if (title.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Title cannot be empty')),
+                    );
+                    return;
+                  }
+
+                  final todo = TodoCardCompanion(
+                    name: Value(title),
+                    description: Value(
+                      description.isNotEmpty ? description : null,
                     ),
-                  ),
-                  InputFormField(
-                    controller: _titleController,
-                    hintText: 'Enter title here',
-                    maxLength: 30,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: AppPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                spacing: 10,
-                children: [
-                  Text(
-                    'Description',
-                    style: context.theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  InputFormField(
-                    controller: _descriptionController,
-                    hintText: 'Enter description here',
-                    maxLength: 200,
-                    maxLines: 6,
-                    showCounter: true,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: AppPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                spacing: 10,
-                children: [
-                  Text(
-                    'Tags',
-                    style: context.theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const CategorySelector(),
-                ],
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: AppPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              child: PrioritySelector(
-                selected: _priorityValue,
-                onChanged: (value) {
-                  setState(() {
-                    _priorityValue = value;
-                    _selectedCategory = value?.toCategoryString;
-                  });
+                    category: Value(_selectedCategory),
+                    priority: Value(_priorityValue?.toInt),
+                    createdAt: Value(DateTime.now()),
+                    isCompleted: const Value(false),
+                  );
+
+                  context.read<TaskBloc>().add(AddTodo(todo));
+                  context.pop();
                 },
               ),
             ),
           ),
-        ],
-      ),
-      bottomNavigationBar: SafeArea(
-        minimum: const EdgeInsets.all(10),
-        child: CustomButton(
-          text: 'Continue',
-          onPressed: () {
-            final title = _titleController.text.trim();
-            final description = _descriptionController.text.trim();
-
-            if (title.isEmpty) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Title cannot be empty')),
-              );
-              return;
-            }
-
-            final todo = TodoCardCompanion(
-              name: Value(title),
-              description: Value(description.isNotEmpty ? description : null),
-              category: Value(_selectedCategory),
-              priority: Value(_priorityValue?.toInt),
-              createdAt: Value(DateTime.now()),
-              isCompleted: const Value(false),
-            );
-
-            context.read<TaskBloc>().add(AddTodo(todo));
-            context.pop();
-          },
-        ),
-      ),
+        );
+      },
     );
   }
 }

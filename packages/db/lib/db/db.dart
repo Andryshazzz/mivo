@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:db/tables/todocard_table.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -9,7 +10,7 @@ import '../tables/user_table.dart';
 
 part 'db.g.dart';
 
-@DriftDatabase(tables: [TodoCard, User])
+@DriftDatabase(tables: [TodoCard, UserName])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

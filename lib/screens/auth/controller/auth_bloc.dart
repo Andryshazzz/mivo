@@ -11,6 +11,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.userRepository}) : super(AuthState()) {
     on<SaveUserNameEvent>(_saveUserName);
     on<CheckAuthEvent>(_checkAuth);
+    on<HasAuthEvent>(_hasUser);
   }
 
   Future<void> _saveUserName(
@@ -27,5 +28,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       emit(state.copyWith(userName: 'ой'));
     }
+  }
+
+  Future<void> _hasUser(HasAuthEvent event, Emitter<AuthState> emit) async {
+    final hasAuth = await userRepository.hasUser();
+    emit(state.copyWith(hasAuth: hasAuth));
   }
 }

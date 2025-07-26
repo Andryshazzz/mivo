@@ -1,6 +1,6 @@
 import 'package:auth_test/app/dependencies/dependencies.dart';
 import 'package:auth_test/app/router/routes.dart';
-import 'package:db/db/db.dart';
+import 'package:auth_test/repos/user_repo.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +8,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../repos/task_repo.dart';
 import '../../screens/auth/auth_screen.dart';
+import '../../screens/auth/controller/auth_bloc.dart';
+import '../../screens/auth/controller/auth_event.dart';
 import '../../screens/create_task/create_task_screen.dart';
 import '../../screens/home/home_screen.dart';
 import '../../screens/plan/plan_screen.dart';
@@ -35,6 +37,22 @@ final class AppRouter {
     observers: [Observer()],
     debugLogDiagnostics: kDebugMode,
     initialLocation: Routes.auth.path,
+    redirect: (context, state) {
+      final isAuthorized = getIt<UserRepository>().isAuth;
+      final isOnAuthPage = state.fullPath == Routes.auth.path;
+
+      if (!isAuthorized && !isOnAuthPage) {
+        return Routes.auth.path;
+      }
+
+      if (isAuthorized && isOnAuthPage) {
+        final userName = getIt<UserRepository>().currentName;
+        context.read<AuthBloc>().add(CheckAuthEvent());
+        return Routes.tasks.path;
+      }
+
+      return null;
+    },
     routes: [
       GoRoute(
         path: Routes.auth.path,

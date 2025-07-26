@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:ui_kit/ui_kit.dart';
 
+import '../auth/controller/auth_bloc.dart';
+import '../auth/controller/auth_state.dart';
 import 'controller/task_bloc.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -63,9 +65,17 @@ class _TaskScreenState extends State<TaskScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            'Hello, Andrey',
-                            style: context.theme.textTheme.displayLarge,
+                          BlocSelector<AuthBloc, AuthState, String?>(
+                            selector: (state) {
+                              if (state.userName != null) return state.userName;
+                              return 'Вася';
+                            },
+                            builder: (context, state) {
+                              return Text(
+                                'Hello, $state',
+                                style: context.theme.textTheme.displayLarge,
+                              );
+                            },
                           ),
                           Text(
                             'Have a nice day',
