@@ -16,7 +16,7 @@ class CustomCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
-      scale: 1.2,
+      scale: 1.5,
       child: Checkbox(
         value: value,
         onChanged: onChanged,

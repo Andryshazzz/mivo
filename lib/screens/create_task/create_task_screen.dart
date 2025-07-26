@@ -19,7 +19,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   final _descriptionController = TextEditingController();
 
   Priority? _priorityValue = Priority.low;
-  String? _selectedCategory;
+  String? _selectedCategory = Priority.low.toCategoryString;
 
   @override
   void dispose() {

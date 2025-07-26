@@ -37,22 +37,24 @@ class _CategoryTabBarState extends State<CategoryTabBar> {
                 onTap: () {
                   setState(() => selectedIndex = index);
                 },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: isSelected
                         ? context.colors.lavenderEcho
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(24),
                   ),
-                  child: Text(
-                    categories[index],
-                    style: context.theme.textTheme.bodyMedium?.copyWith(
-                      color: isSelected
-                          ? context.colors.white
-                          : context.colors.gray.withOpacity(0.6),
-                      fontWeight: FontWeight.w600,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    child: Text(
+                      categories[index],
+                      style: context.theme.textTheme.bodyMedium?.copyWith(
+                        color: isSelected
+                            ? context.colors.white
+                            : context.colors.gray.withOpacity(0.6),
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),

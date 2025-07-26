@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ui_kit/src/theme.dart';
 
-enum MarkerColor {
-  red,
-  green,
-  orange,
-}
+import '../../ui_kit.dart';
 
 class TaskMarker extends StatelessWidget {
   final String text;
-  final MarkerColor color;
+  final int color;
 
   const TaskMarker({
     super.key,
@@ -19,12 +14,14 @@ class TaskMarker extends StatelessWidget {
 
   Color _getBackgroundColor(BuildContext context) {
     switch (color) {
-      case MarkerColor.red:
-        return context.colors.red;
-      case MarkerColor.green:
+      case 1:
         return context.colors.green;
-      case MarkerColor.orange:
+      case 2:
         return context.colors.orange;
+      case 3:
+        return context.colors.red;
+      default:
+        return context.colors.green;
     }
   }
 
@@ -34,7 +31,7 @@ class TaskMarker extends StatelessWidget {
       painter: _MarkerPainter(color: _getBackgroundColor(context)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4)
-            .copyWith(bottom: 16),
+            .copyWith(bottom: 10),
         child: Text(
           text,
           style: context.theme.textTheme.bodySmall?.copyWith(

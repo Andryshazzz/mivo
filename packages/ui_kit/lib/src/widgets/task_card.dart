@@ -39,7 +39,7 @@ class _TaskCardState extends State<TaskCard> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(13),
           child: Row(
             children: [
               CustomCheckbox(
