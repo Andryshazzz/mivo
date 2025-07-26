@@ -93,7 +93,7 @@ class _CategorySelectorState extends State<CategorySelector> {
           return IntrinsicWidth(
             child: RoundSelectedButton(
               borderColor: isSelected
-                  ? Colors.green
+                  ? context.colors.lavenderEcho
                   : context.colors.lavenderEcho.withOpacity(0.2),
               onTap: () => _toggleCategory(category),
               label: category,

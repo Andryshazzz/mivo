@@ -2,29 +2,29 @@ part of 'task_bloc.dart';
 
 sealed class TaskEvent {}
 
-final class LoadTodos extends TaskEvent {}
+final class LoadTasksEvent extends TaskEvent {}
 
-final class AddTodo extends TaskEvent {
-  final TodoCardCompanion todo;
+final class AddTaskEvent extends TaskEvent {
+  final TodoCardCompanion task;
 
-  AddTodo(this.todo);
+  AddTaskEvent({required this.task});
 }
 
-final class DeleteTodo extends TaskEvent {
+final class DeleteTaskEvent extends TaskEvent {
   final int id;
 
-  DeleteTodo(this.id);
+  DeleteTaskEvent({required this.id});
 }
 
-final class ToggleTodoComplete extends TaskEvent {
+final class ToggleCompleteTaskEvent extends TaskEvent {
   final int id;
   final bool isCompleted;
 
-  ToggleTodoComplete(this.id, this.isCompleted);
+  ToggleCompleteTaskEvent({required this.id, required this.isCompleted});
 }
 
-class _TodosUpdated extends TaskEvent {
-  final List<TodoCardData> todos;
+class _TaskUpdated extends TaskEvent {
+  final List<TodoCardData> tasks;
 
-  _TodosUpdated(this.todos);
+  _TaskUpdated(this.tasks);
 }

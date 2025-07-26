@@ -127,7 +127,7 @@ class _TaskCardState extends State<TaskCard> {
       if (widget.marker != null)
         Positioned(
           top: 0,
-          right: 20,
+          right: 35,
           child: widget.marker!,
         ),
     ]);

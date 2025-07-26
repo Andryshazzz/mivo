@@ -12,40 +12,43 @@ part 'task_state.dart';
 
 @injectable
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
-  final TodoRepository repo;
-  StreamSubscription<List<TodoCardData>>? _subscription;
+  final TodoRepository todoRepository;
 
-  TaskBloc({required this.repo}) : super(TaskState()) {
-    on<LoadTodos>(_onLoad);
-    on<AddTodo>(_onAdd);
-    on<DeleteTodo>(_onDelete);
-    on<ToggleTodoComplete>(_onToggle);
-    on<_TodosUpdated>(_onUpdated);
+  TaskBloc({required this.todoRepository}) : super(TaskState()) {
+    on<TaskEvent>(
+      (event, emit) => switch (event) {
+        LoadTasksEvent() => _onLoad(event, emit),
+        AddTaskEvent() => _onAdd(event, emit),
+        DeleteTaskEvent() => _onDelete(event, emit),
+        ToggleCompleteTaskEvent() => _onToggle(event, emit),
+        _TaskUpdated() => _onUpdated(event, emit),
+      },
+    );
   }
 
-  Future<void> _onLoad(LoadTodos event, Emitter<TaskState> emit) async {
-    await _subscription?.cancel();
-    _subscription = repo.getTasks().listen((todos) {
-      add(_TodosUpdated(todos));
-    });
+  Future<void> _onLoad(LoadTasksEvent event, Emitter<TaskState> emit) async {
+    await emit.forEach<List<TodoCardData>>(
+      todoRepository.getTasks(),
+      onData: (todos) => state.copyWith(tasks: todos),
+    );
   }
 
-  Future<void> _onDelete(DeleteTodo event, Emitter<TaskState> emit) async {
-    await repo.deleteTask(event.id);
+  Future<void> _onDelete(DeleteTaskEvent event, Emitter<TaskState> emit) async {
+    await todoRepository.deleteTask(event.id);
   }
 
-  Future<void> _onAdd(AddTodo event, Emitter<TaskState> emit) async {
-    await repo.addTodo(event.todo);
+  Future<void> _onAdd(AddTaskEvent event, Emitter<TaskState> emit) async {
+    await todoRepository.addTodo(event.task);
   }
 
   Future<void> _onToggle(
-    ToggleTodoComplete event,
+    ToggleCompleteTaskEvent event,
     Emitter<TaskState> emit,
   ) async {
-    await repo.toggleComplete(event.id, event.isCompleted);
+    await todoRepository.toggleComplete(event.id, event.isCompleted);
   }
 
-  Future<void> _onUpdated(_TodosUpdated event, Emitter<TaskState> emit) async {
-    emit(state.copyWith(todos: event.todos));
+  Future<void> _onUpdated(_TaskUpdated event, Emitter<TaskState> emit) async {
+    emit(state.copyWith(tasks: event.tasks));
   }
 }

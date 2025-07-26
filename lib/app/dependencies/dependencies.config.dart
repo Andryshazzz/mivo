@@ -32,7 +32,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i613.TodoRepository(db: gh<_i824.Database>()),
     );
     gh.factory<_i300.TaskBloc>(
-      () => _i300.TaskBloc(repo: gh<_i613.TodoRepository>()),
+      () => _i300.TaskBloc(todoRepository: gh<_i613.TodoRepository>()),
     );
     gh.factory<_i239.UserBloc>(
       () => _i239.UserBloc(userRepository: gh<_i1042.UserRepository>()),

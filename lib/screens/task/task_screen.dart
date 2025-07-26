@@ -66,12 +66,11 @@ class _TaskScreenState extends State<TaskScreen> {
                         children: [
                           BlocSelector<UserBloc, UserState, String?>(
                             selector: (state) {
-                              if (state.userName != null) return state.userName;
-                              return 'Вася';
+                              return state.userName;
                             },
-                            builder: (context, state) {
+                            builder: (context, name) {
                               return Text(
-                                'Hello, $state',
+                                'Hello, $name',
                                 style: context.theme.textTheme.displayLarge,
                               );
                             },
@@ -101,8 +100,8 @@ class _TaskScreenState extends State<TaskScreen> {
                 child: AppPadding(
                   child: BlocBuilder<TaskBloc, TaskState>(
                     builder: (context, state) {
-                      final todos = state.todos;
-                      if (state.todos.isEmpty) {
+                      final todos = state.tasks;
+                      if (state.tasks.isEmpty) {
                         return const Center(child: CircularProgressIndicator());
                       }
                       return ListView.separated(
@@ -131,9 +130,9 @@ class _TaskScreenState extends State<TaskScreen> {
                             isCompleted: todos[index].isCompleted,
                             onCheckboxChanged: (newValue) {
                               context.read<TaskBloc>().add(
-                                ToggleTodoComplete(
-                                  todos[index].id,
-                                  newValue ?? false,
+                                ToggleCompleteTaskEvent(
+                                  id: todos[index].id,
+                                  isCompleted: newValue ?? false,
                                 ),
                               );
                             },
@@ -141,7 +140,7 @@ class _TaskScreenState extends State<TaskScreen> {
                               if (value == 'edit') {}
                               if (value == 'delete') {
                                 context.read<TaskBloc>().add(
-                                  DeleteTodo(todos[index].id),
+                                  DeleteTaskEvent(id: todos[index].id),
                                 );
                               }
                             },

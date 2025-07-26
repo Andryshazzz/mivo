@@ -73,8 +73,8 @@ final class AppRouter {
                     (context, state) => BlocProvider(
                       create:
                           (context) =>
-                              TaskBloc(repo: getIt<TodoRepository>())
-                                ..add(LoadTodos()),
+                              TaskBloc(todoRepository: getIt<TodoRepository>())
+                                ..add(LoadTasksEvent()),
                       child: const TaskScreen(),
                     ),
               ),
@@ -96,7 +96,7 @@ final class AppRouter {
         name: Routes.create.name,
         builder:
             (context, state) => BlocProvider(
-              create: (context) => TaskBloc(repo: getIt<TodoRepository>()),
+              create: (context) => TaskBloc(todoRepository: getIt<TodoRepository>()),
               child: const CreateTaskScreen(),
             ),
       ),

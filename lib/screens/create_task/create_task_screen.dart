@@ -33,7 +33,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-
         return Scaffold(
           resizeToAvoidBottomInset: false,
           body: CustomScrollView(
@@ -59,10 +58,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               ),
               SliverToBoxAdapter(
                 child: AppPadding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 10,
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -160,7 +156,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               right: 10,
               top: 10,
             ),
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 50),
             curve: Curves.easeOut,
             child: SafeArea(
               minimum: const EdgeInsets.all(10),
@@ -170,6 +166,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   final title = _titleController.text.trim();
                   final description = _descriptionController.text.trim();
 
+                  // Сделать кастомный снэкбар
                   if (title.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Title cannot be empty')),
@@ -179,16 +176,14 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
                   final todo = TodoCardCompanion(
                     name: Value(title),
-                    description: Value(
-                      description.isNotEmpty ? description : null,
-                    ),
+                    description: Value(description),
                     category: Value(_selectedCategory),
                     priority: Value(_priorityValue?.toInt),
                     createdAt: Value(DateTime.now()),
                     isCompleted: const Value(false),
                   );
 
-                  context.read<TaskBloc>().add(AddTodo(todo));
+                  context.read<TaskBloc>().add(AddTaskEvent(task: todo));
                   context.pop();
                 },
               ),

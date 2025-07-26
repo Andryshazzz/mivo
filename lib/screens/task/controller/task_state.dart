@@ -1,11 +1,11 @@
 part of 'task_bloc.dart';
 
 class TaskState {
-  final List<TodoCardData> todos;
+  final List<TodoCardData> tasks;
 
-  TaskState({this.todos = const []});
+  TaskState({this.tasks = const []});
 
-  TaskState copyWith({List<TodoCardData>? todos}) {
-    return TaskState(todos: todos ?? this.todos);
+  TaskState copyWith({List<TodoCardData>? tasks}) {
+    return TaskState(tasks: tasks ?? this.tasks);
   }
 }

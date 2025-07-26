@@ -30,19 +30,47 @@ class TaskMarker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: _getBackgroundColor(context),
-      ),
+    return CustomPaint(
+      painter: _MarkerPainter(color: _getBackgroundColor(context)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4)
+            .copyWith(bottom: 16),
         child: Text(
           text,
           style: context.theme.textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.w600,
+            color: context.colors.white,
           ),
         ),
       ),
     );
+  }
+}
+
+class _MarkerPainter extends CustomPainter {
+  final Color color;
+
+  _MarkerPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = color;
+
+    final path = Path()
+      ..moveTo(0, 0)
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width, size.height - 8)
+      ..lineTo(size.width / 2, size.height)
+      ..lineTo(size.width / 2, size.height)
+      ..lineTo(size.width / 2, size.height)
+      ..lineTo(0, size.height - 8)
+      ..close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _MarkerPainter oldDelegate) {
+    return oldDelegate.color != color;
   }
 }
