@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 import '../../app/router/routes.dart';
-import 'controller/auth_bloc.dart';
-import 'controller/auth_event.dart';
+import 'controller/user_bloc.dart';
+import 'controller/user_event.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -57,8 +57,8 @@ class _AuthScreenState extends State<AuthScreen> {
                 text: 'Continue',
                 onPressed: () {
                   final name = _nameController.text.trim();
-                  context.read<AuthBloc>().add(SaveUserNameEvent(name: name));
-                  context.read<AuthBloc>().add(CheckAuthEvent());
+                  context.read<UserBloc>().add(SaveUserNameEvent(name: name));
+                  context.read<UserBloc>().add(GetUserNameEvent());
                   if (mounted) context.go(Routes.tasks.path);
                 },
               ),
@@ -80,8 +80,8 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                     ),
                   ),
-                  const Expanded(
-                    child: Divider(color: Color(0xFF2E2E2E), thickness: 1),
+                  Expanded(
+                    child: Divider(color: context.colors.gray, thickness: 1),
                   ),
                 ],
               ),

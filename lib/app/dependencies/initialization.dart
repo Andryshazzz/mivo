@@ -3,7 +3,7 @@ import 'package:auth_test/repos/user_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:l/l.dart';
-import 'dependencies/dependencies.dart';
+import 'dependencies.dart';
 
 Future<void> $initApp() async {
   WidgetsFlutterBinding.ensureInitialized();

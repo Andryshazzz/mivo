@@ -1,28 +1,25 @@
 import 'dart:async';
 import 'package:auth_test/app/dependencies/dependencies.dart';
-import 'package:auth_test/repos/user_repo.dart';
-import 'package:auth_test/screens/auth/controller/auth_bloc.dart';
+import 'package:auth_test/screens/auth/controller/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:l/l.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-import 'app/initialization.dart';
+import 'app/dependencies/initialization.dart';
 import 'app/router/router.dart';
 
-void main() async =>
-    l.capture<void>(
-          () =>
-          runZonedGuarded<void>(() async {
-            await $initApp();
-            runApp(const MivoApp());
-          }, l.e),
-      const LogOptions(
-        printColors: false,
-        output: LogOutput.print,
-        overrideOutput: _customFormatter,
-      ),
-    );
+void main() async => l.capture<void>(
+  () => runZonedGuarded<void>(() async {
+    await $initApp();
+    runApp(const MivoApp());
+  }, l.e),
+  const LogOptions(
+    printColors: false,
+    output: LogOutput.print,
+    overrideOutput: _customFormatter,
+  ),
+);
 
 class MivoApp extends StatelessWidget {
   const MivoApp({super.key});
@@ -30,7 +27,7 @@ class MivoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(userRepository: getIt<UserRepository>()),
+      create: (context) => getIt<UserBloc>(),
       child: MaterialApp.router(
         theme: AppTheme.darkTheme,
         routerConfig: AppRouter.router,

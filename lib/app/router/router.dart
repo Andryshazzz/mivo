@@ -8,8 +8,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../repos/task_repo.dart';
 import '../../screens/auth/auth_screen.dart';
-import '../../screens/auth/controller/auth_bloc.dart';
-import '../../screens/auth/controller/auth_event.dart';
+import '../../screens/auth/controller/user_bloc.dart';
+import '../../screens/auth/controller/user_event.dart';
 import '../../screens/create_task/create_task_screen.dart';
 import '../../screens/home/home_screen.dart';
 import '../../screens/plan/plan_screen.dart';
@@ -47,7 +47,7 @@ final class AppRouter {
 
       if (isAuthorized && isOnAuthPage) {
         final userName = getIt<UserRepository>().currentName;
-        context.read<AuthBloc>().add(CheckAuthEvent());
+        context.read<UserBloc>().add(GetUserNameEvent());
         return Routes.tasks.path;
       }
 
