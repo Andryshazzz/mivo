@@ -10,7 +10,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auth_test/data/source/local/db.dart' as _i824;
-import 'package:auth_test/data/source/network/api_client.dart' as _i772;
 import 'package:auth_test/repos/task_repo.dart' as _i613;
 import 'package:auth_test/repos/user_repo.dart' as _i1042;
 import 'package:auth_test/screens/auth/controller/auth_bloc.dart' as _i97;
@@ -25,13 +24,12 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.singleton<_i772.ApiClient>(() => _i772.ApiClient());
     gh.singleton<_i824.Database>(() => _i824.Database());
-    gh.singleton<_i613.TodoRepository>(
-      () => _i613.TodoRepository(db: gh<_i824.Database>()),
-    );
     gh.singleton<_i1042.UserRepository>(
       () => _i1042.UserRepository(db: gh<_i824.Database>()),
+    );
+    gh.singleton<_i613.TodoRepository>(
+      () => _i613.TodoRepository(db: gh<_i824.Database>()),
     );
     gh.factory<_i300.TaskBloc>(
       () => _i300.TaskBloc(repo: gh<_i613.TodoRepository>()),

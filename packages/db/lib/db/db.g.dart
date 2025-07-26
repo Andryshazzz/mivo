@@ -385,12 +385,12 @@ class TodoCardCompanion extends UpdateCompanion<TodoCardData> {
   }
 }
 
-class $UserNameTable extends UserName
-    with TableInfo<$UserNameTable, UserNameData> {
+class $UserDataTable extends UserData
+    with TableInfo<$UserDataTable, UserDataData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $UserNameTable(this.attachedDatabase, [this._alias]);
+  $UserDataTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -419,9 +419,9 @@ class $UserNameTable extends UserName
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'user_name';
+  static const String $name = 'user_data';
   @override
-  VerificationContext validateIntegrity(Insertable<UserNameData> instance,
+  VerificationContext validateIntegrity(Insertable<UserDataData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -444,9 +444,9 @@ class $UserNameTable extends UserName
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  UserNameData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  UserDataData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return UserNameData(
+    return UserDataData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
@@ -457,16 +457,16 @@ class $UserNameTable extends UserName
   }
 
   @override
-  $UserNameTable createAlias(String alias) {
-    return $UserNameTable(attachedDatabase, alias);
+  $UserDataTable createAlias(String alias) {
+    return $UserDataTable(attachedDatabase, alias);
   }
 }
 
-class UserNameData extends DataClass implements Insertable<UserNameData> {
+class UserDataData extends DataClass implements Insertable<UserDataData> {
   final int id;
   final String name;
   final DateTime createdAt;
-  const UserNameData(
+  const UserDataData(
       {required this.id, required this.name, required this.createdAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -477,18 +477,18 @@ class UserNameData extends DataClass implements Insertable<UserNameData> {
     return map;
   }
 
-  UserNameCompanion toCompanion(bool nullToAbsent) {
-    return UserNameCompanion(
+  UserDataCompanion toCompanion(bool nullToAbsent) {
+    return UserDataCompanion(
       id: Value(id),
       name: Value(name),
       createdAt: Value(createdAt),
     );
   }
 
-  factory UserNameData.fromJson(Map<String, dynamic> json,
+  factory UserDataData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return UserNameData(
+    return UserDataData(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
@@ -504,14 +504,14 @@ class UserNameData extends DataClass implements Insertable<UserNameData> {
     };
   }
 
-  UserNameData copyWith({int? id, String? name, DateTime? createdAt}) =>
-      UserNameData(
+  UserDataData copyWith({int? id, String? name, DateTime? createdAt}) =>
+      UserDataData(
         id: id ?? this.id,
         name: name ?? this.name,
         createdAt: createdAt ?? this.createdAt,
       );
-  UserNameData copyWithCompanion(UserNameCompanion data) {
-    return UserNameData(
+  UserDataData copyWithCompanion(UserDataCompanion data) {
+    return UserDataData(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
@@ -520,7 +520,7 @@ class UserNameData extends DataClass implements Insertable<UserNameData> {
 
   @override
   String toString() {
-    return (StringBuffer('UserNameData(')
+    return (StringBuffer('UserDataData(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('createdAt: $createdAt')
@@ -533,27 +533,27 @@ class UserNameData extends DataClass implements Insertable<UserNameData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is UserNameData &&
+      (other is UserDataData &&
           other.id == this.id &&
           other.name == this.name &&
           other.createdAt == this.createdAt);
 }
 
-class UserNameCompanion extends UpdateCompanion<UserNameData> {
+class UserDataCompanion extends UpdateCompanion<UserDataData> {
   final Value<int> id;
   final Value<String> name;
   final Value<DateTime> createdAt;
-  const UserNameCompanion({
+  const UserDataCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.createdAt = const Value.absent(),
   });
-  UserNameCompanion.insert({
+  UserDataCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     this.createdAt = const Value.absent(),
   }) : name = Value(name);
-  static Insertable<UserNameData> custom({
+  static Insertable<UserDataData> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<DateTime>? createdAt,
@@ -565,9 +565,9 @@ class UserNameCompanion extends UpdateCompanion<UserNameData> {
     });
   }
 
-  UserNameCompanion copyWith(
+  UserDataCompanion copyWith(
       {Value<int>? id, Value<String>? name, Value<DateTime>? createdAt}) {
-    return UserNameCompanion(
+    return UserDataCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       createdAt: createdAt ?? this.createdAt,
@@ -591,7 +591,7 @@ class UserNameCompanion extends UpdateCompanion<UserNameData> {
 
   @override
   String toString() {
-    return (StringBuffer('UserNameCompanion(')
+    return (StringBuffer('UserDataCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('createdAt: $createdAt')
@@ -604,12 +604,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $TodoCardTable todoCard = $TodoCardTable(this);
-  late final $UserNameTable userName = $UserNameTable(this);
+  late final $UserDataTable userData = $UserDataTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [todoCard, userName];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [todoCard, userData];
 }
 
 typedef $$TodoCardTableCreateCompanionBuilder = TodoCardCompanion Function({
@@ -801,20 +801,20 @@ typedef $$TodoCardTableProcessedTableManager = ProcessedTableManager<
     (TodoCardData, BaseReferences<_$AppDatabase, $TodoCardTable, TodoCardData>),
     TodoCardData,
     PrefetchHooks Function()>;
-typedef $$UserNameTableCreateCompanionBuilder = UserNameCompanion Function({
+typedef $$UserDataTableCreateCompanionBuilder = UserDataCompanion Function({
   Value<int> id,
   required String name,
   Value<DateTime> createdAt,
 });
-typedef $$UserNameTableUpdateCompanionBuilder = UserNameCompanion Function({
+typedef $$UserDataTableUpdateCompanionBuilder = UserDataCompanion Function({
   Value<int> id,
   Value<String> name,
   Value<DateTime> createdAt,
 });
 
-class $$UserNameTableFilterComposer
-    extends Composer<_$AppDatabase, $UserNameTable> {
-  $$UserNameTableFilterComposer({
+class $$UserDataTableFilterComposer
+    extends Composer<_$AppDatabase, $UserDataTable> {
+  $$UserDataTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -831,9 +831,9 @@ class $$UserNameTableFilterComposer
       column: $table.createdAt, builder: (column) => ColumnFilters(column));
 }
 
-class $$UserNameTableOrderingComposer
-    extends Composer<_$AppDatabase, $UserNameTable> {
-  $$UserNameTableOrderingComposer({
+class $$UserDataTableOrderingComposer
+    extends Composer<_$AppDatabase, $UserDataTable> {
+  $$UserDataTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -850,9 +850,9 @@ class $$UserNameTableOrderingComposer
       column: $table.createdAt, builder: (column) => ColumnOrderings(column));
 }
 
-class $$UserNameTableAnnotationComposer
-    extends Composer<_$AppDatabase, $UserNameTable> {
-  $$UserNameTableAnnotationComposer({
+class $$UserDataTableAnnotationComposer
+    extends Composer<_$AppDatabase, $UserDataTable> {
+  $$UserDataTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -869,34 +869,34 @@ class $$UserNameTableAnnotationComposer
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
 }
 
-class $$UserNameTableTableManager extends RootTableManager<
+class $$UserDataTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $UserNameTable,
-    UserNameData,
-    $$UserNameTableFilterComposer,
-    $$UserNameTableOrderingComposer,
-    $$UserNameTableAnnotationComposer,
-    $$UserNameTableCreateCompanionBuilder,
-    $$UserNameTableUpdateCompanionBuilder,
-    (UserNameData, BaseReferences<_$AppDatabase, $UserNameTable, UserNameData>),
-    UserNameData,
+    $UserDataTable,
+    UserDataData,
+    $$UserDataTableFilterComposer,
+    $$UserDataTableOrderingComposer,
+    $$UserDataTableAnnotationComposer,
+    $$UserDataTableCreateCompanionBuilder,
+    $$UserDataTableUpdateCompanionBuilder,
+    (UserDataData, BaseReferences<_$AppDatabase, $UserDataTable, UserDataData>),
+    UserDataData,
     PrefetchHooks Function()> {
-  $$UserNameTableTableManager(_$AppDatabase db, $UserNameTable table)
+  $$UserDataTableTableManager(_$AppDatabase db, $UserDataTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$UserNameTableFilterComposer($db: db, $table: table),
+              $$UserDataTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$UserNameTableOrderingComposer($db: db, $table: table),
+              $$UserDataTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$UserNameTableAnnotationComposer($db: db, $table: table),
+              $$UserDataTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> name = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
           }) =>
-              UserNameCompanion(
+              UserDataCompanion(
             id: id,
             name: name,
             createdAt: createdAt,
@@ -906,7 +906,7 @@ class $$UserNameTableTableManager extends RootTableManager<
             required String name,
             Value<DateTime> createdAt = const Value.absent(),
           }) =>
-              UserNameCompanion.insert(
+              UserDataCompanion.insert(
             id: id,
             name: name,
             createdAt: createdAt,
@@ -918,17 +918,17 @@ class $$UserNameTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$UserNameTableProcessedTableManager = ProcessedTableManager<
+typedef $$UserDataTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
-    $UserNameTable,
-    UserNameData,
-    $$UserNameTableFilterComposer,
-    $$UserNameTableOrderingComposer,
-    $$UserNameTableAnnotationComposer,
-    $$UserNameTableCreateCompanionBuilder,
-    $$UserNameTableUpdateCompanionBuilder,
-    (UserNameData, BaseReferences<_$AppDatabase, $UserNameTable, UserNameData>),
-    UserNameData,
+    $UserDataTable,
+    UserDataData,
+    $$UserDataTableFilterComposer,
+    $$UserDataTableOrderingComposer,
+    $$UserDataTableAnnotationComposer,
+    $$UserDataTableCreateCompanionBuilder,
+    $$UserDataTableUpdateCompanionBuilder,
+    (UserDataData, BaseReferences<_$AppDatabase, $UserDataTable, UserDataData>),
+    UserDataData,
     PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
@@ -936,6 +936,6 @@ class $AppDatabaseManager {
   $AppDatabaseManager(this._db);
   $$TodoCardTableTableManager get todoCard =>
       $$TodoCardTableTableManager(_db, _db.todoCard);
-  $$UserNameTableTableManager get userName =>
-      $$UserNameTableTableManager(_db, _db.userName);
+  $$UserDataTableTableManager get userData =>
+      $$UserDataTableTableManager(_db, _db.userData);
 }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:auth_test/repos/user_repo.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:l/l.dart';
 import 'dependencies/dependencies.dart';
 
@@ -11,6 +12,7 @@ Future<void> $initApp() async {
     l.e('Top level error: $err', st);
     return true;
   };
+
   await configureDependencies();
 
   await getIt<UserRepository>().getUserName();
