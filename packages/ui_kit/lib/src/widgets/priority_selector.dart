@@ -15,17 +15,6 @@ enum Priority {
         return 3;
     }
   }
-
-  String get toCategoryString {
-    switch (this) {
-      case Priority.low:
-        return 'L';
-      case Priority.medium:
-        return 'M';
-      case Priority.high:
-        return 'H';
-    }
-  }
 }
 
 class PrioritySelector extends StatefulWidget {

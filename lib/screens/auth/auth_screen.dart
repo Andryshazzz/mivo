@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 import '../../app/router/routes.dart';
+import '../../app/utils/dismiss_tap.dart';
 import 'controller/user_bloc.dart';
 import 'controller/user_event.dart';
 
@@ -140,21 +141,6 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class KeyboardDismissOnTap extends StatelessWidget {
-  final Widget child;
-
-  const KeyboardDismissOnTap({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: child,
     );
   }
 }

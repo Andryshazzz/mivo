@@ -6,7 +6,9 @@ import 'package:flutter/services.dart';
 import '../../ui_kit.dart';
 
 class CategorySelector extends StatefulWidget {
-  const CategorySelector({super.key});
+  final ValueChanged<List<String?>> onCategoriesSelected;
+
+  const CategorySelector({super.key, required this.onCategoriesSelected});
 
   @override
   State<CategorySelector> createState() => _CategorySelectorState();
@@ -24,6 +26,7 @@ class _CategorySelectorState extends State<CategorySelector> {
       } else {
         _selected.add(category);
       }
+      widget.onCategoriesSelected.call(_selected.toList());
     });
   }
 

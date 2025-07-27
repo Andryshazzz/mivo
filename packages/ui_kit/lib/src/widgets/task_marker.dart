@@ -3,17 +3,15 @@ import 'package:flutter/material.dart';
 import '../../ui_kit.dart';
 
 class TaskMarker extends StatelessWidget {
-  final String text;
-  final int color;
+  final int priority;
 
   const TaskMarker({
     super.key,
-    required this.text,
-    required this.color,
+    required this.priority,
   });
 
   Color _getBackgroundColor(BuildContext context) {
-    switch (color) {
+    switch (priority) {
       case 1:
         return context.colors.green;
       case 2:
@@ -25,6 +23,19 @@ class TaskMarker extends StatelessWidget {
     }
   }
 
+  String _getPriority() {
+    switch (priority) {
+      case 1:
+        return 'L';
+      case 2:
+        return 'M';
+      case 3:
+        return 'H';
+      default:
+        return "L";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
@@ -33,7 +44,7 @@ class TaskMarker extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4)
             .copyWith(bottom: 10),
         child: Text(
-          text,
+          _getPriority(),
           style: context.theme.textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.w600,
             color: context.colors.white,

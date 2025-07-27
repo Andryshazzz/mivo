@@ -166,7 +166,6 @@ class _TaskListForDate extends StatelessWidget {
                   task.createdAt.month == date.month &&
                   task.createdAt.day == date.day;
             }).toList();
-
         if (todos.isEmpty) {
           return Center(
             child: Text(
@@ -175,28 +174,23 @@ class _TaskListForDate extends StatelessWidget {
             ),
           );
         }
-
         return ListView.separated(
           itemCount: todos.length,
           itemBuilder: (context, index) {
+            final todoItem = todos[index];
             return TaskCard(
-              title: todos[index].name,
-              description: todos[index].description ?? '',
-              createdAt: DateFormat(
-                'dd.MM.yyyy',
-              ).format(todos[index].createdAt),
+              title: todoItem.name,
+              description: todoItem.description ?? '',
+              createdAt: DateFormat('dd.MM.yyyy').format(todoItem.createdAt),
               marker:
-                  todos[index].priority != null
-                      ? TaskMarker(
-                        text: todos[index].category ?? '?',
-                        color: todos[index].priority!,
-                      )
+                  todoItem.priority != null
+                      ? TaskMarker(priority: todoItem.priority!)
                       : null,
-              isCompleted: todos[index].isCompleted,
+              isCompleted: todoItem.isCompleted,
               onCheckboxChanged: (newValue) {
                 context.read<TaskBloc>().add(
                   ToggleCompleteTaskEvent(
-                    id: todos[index].id,
+                    id: todoItem.id,
                     isCompleted: newValue ?? false,
                   ),
                 );
@@ -205,7 +199,7 @@ class _TaskListForDate extends StatelessWidget {
                 if (value == 'edit') {}
                 if (value == 'delete') {
                   context.read<TaskBloc>().add(
-                    DeleteTaskEvent(id: todos[index].id),
+                    DeleteTaskEvent(id: todoItem.id),
                   );
                 }
               },
