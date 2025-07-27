@@ -3,8 +3,12 @@ import 'package:ui_kit/ui_kit.dart';
 
 class CategoryTabBar extends StatefulWidget {
   final ValueChanged<String> onCategorySelected;
+  final String selectedCategory;
 
-  const CategoryTabBar({super.key, required this.onCategorySelected});
+  const CategoryTabBar(
+      {super.key,
+      required this.onCategorySelected,
+      required this.selectedCategory});
 
   @override
   State<CategoryTabBar> createState() => _CategoryTabBarState();
@@ -22,6 +26,17 @@ class _CategoryTabBarState extends State<CategoryTabBar> {
   void _selectCategory(int index) {
     setState(() => selectedIndex = index);
     widget.onCategorySelected(categories[index]);
+  }
+
+  @override
+  void didUpdateWidget(covariant CategoryTabBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.selectedCategory != oldWidget.selectedCategory) {
+      final newIndex = categories.indexOf(widget.selectedCategory);
+      if (newIndex != -1 && newIndex != selectedIndex) {
+        setState(() => selectedIndex = newIndex);
+      }
+    }
   }
 
   @override

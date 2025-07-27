@@ -137,6 +137,7 @@ class _TaskScreenState extends State<TaskScreen> {
                         Expanded(
                           child: CategoryTabBar(
                             onCategorySelected: _onCategorySelected,
+                            selectedCategory: _selectedCategory,
                           ),
                         ),
                         const SizedBox(width: 15),
