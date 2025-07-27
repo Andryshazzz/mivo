@@ -3,30 +3,52 @@ import 'package:intl/intl.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 class DateSelector extends StatefulWidget {
-  const DateSelector({super.key});
+  final DateTime selectedDate;
+  final ValueChanged<DateTime> onDateChanged;
+
+  const DateSelector(
+      {super.key, required this.selectedDate, required this.onDateChanged});
 
   @override
   State<DateSelector> createState() => _DateSelectorState();
 }
 
 class _DateSelectorState extends State<DateSelector> {
-  DateTime selectedDate = DateTime.now();
+  late DateTime _selectedDate;
 
-  void _nextDay() {
-    setState(() {
-      selectedDate = selectedDate.add(const Duration(days: 1));
-    });
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = widget.selectedDate;
   }
 
-  void _previousDay() {
-    if (!_isToday(selectedDate)) {
+  @override
+  void didUpdateWidget(covariant DateSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_selectedDate != widget.selectedDate) {
       setState(() {
-        selectedDate = selectedDate.subtract(const Duration(days: 1));
+        _selectedDate = widget.selectedDate;
       });
     }
   }
 
-  bool _isToday(DateTime date) {
+  void _nextDay() {
+    setState(() {
+      _selectedDate = _selectedDate.add(const Duration(days: 1));
+      widget.onDateChanged(_selectedDate);
+    });
+  }
+
+  void _previousDay() {
+    if (!_isNow(_selectedDate)) {
+      setState(() {
+        _selectedDate = _selectedDate.subtract(const Duration(days: 1));
+        widget.onDateChanged(_selectedDate);
+      });
+    }
+  }
+
+  bool _isNow(DateTime date) {
     final now = DateTime.now();
     return date.year == now.year &&
         date.month == now.month &&
@@ -35,10 +57,10 @@ class _DateSelectorState extends State<DateSelector> {
 
   @override
   Widget build(BuildContext context) {
-    final dayOfWeek = DateFormat.EEEE().format(selectedDate);
+    final dayOfWeek = DateFormat.EEEE().format(_selectedDate);
     final monthDay =
-        DateFormat.MMMM().format(selectedDate) + ' ${selectedDate.day}';
-    final isToday = _isToday(selectedDate);
+        DateFormat.MMMM().format(_selectedDate) + ' ${_selectedDate.day}';
+    final isNow = _isNow(_selectedDate);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -54,10 +76,10 @@ class _DateSelectorState extends State<DateSelector> {
           children: [
             IconButton(
               icon: Icon(Icons.chevron_left,
-                  color: isToday
+                  color: isNow
                       ? context.colors.gray.withOpacity(0.3)
                       : context.colors.lavenderEcho),
-              onPressed: isToday ? null : _previousDay,
+              onPressed: isNow ? null : _previousDay,
             ),
             Text(
               monthDay,
