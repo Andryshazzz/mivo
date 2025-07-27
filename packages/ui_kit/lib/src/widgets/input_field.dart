@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ui_kit/src/theme.dart';
 
 class InputFormField extends StatelessWidget {
@@ -7,7 +8,36 @@ class InputFormField extends StatelessWidget {
   final TextEditingController? controller;
   final int? maxLength;
   final int? maxLines;
-  final bool showCounter;
+  final String? counterText;
+  final VoidCallback? onDateTap;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
+
+  factory InputFormField.date(
+      {String? Function(String? value)? validator,
+      TextEditingController? controller,
+      VoidCallback? onDateTap,
+      String? hintText,
+      int maxLength = 8,
+      int maxLines = 1,
+      String counterText = '',
+      TextInputType keyboardType = TextInputType.datetime}) {
+    return InputFormField(
+      validator: validator,
+      controller: controller,
+      onDateTap: onDateTap,
+      hintText: hintText,
+      maxLength: maxLength,
+      maxLines: maxLines,
+      keyboardType: keyboardType,
+      counterText: counterText,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+        LengthLimitingTextInputFormatter(8),
+        _DateInputFormatter(),
+      ],
+    );
+  }
 
   const InputFormField(
       {super.key,
@@ -15,8 +45,11 @@ class InputFormField extends StatelessWidget {
       this.controller,
       this.hintText,
       this.maxLength,
-      this.showCounter = false,
-      this.maxLines});
+      this.counterText,
+      this.maxLines,
+      this.onDateTap,
+      this.keyboardType,
+      this.inputFormatters});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +71,7 @@ class InputFormField extends StatelessWidget {
             .copyWith(fontSize: 12, color: context.colors.red),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        counterText: showCounter ? null : '',
+        counterText: counterText,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide:
@@ -60,6 +93,32 @@ class InputFormField extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
       ),
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
+    );
+  }
+}
+
+class _DateInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final text = newValue.text;
+    if (text.isEmpty) return newValue;
+
+    final cleanText = text.replaceAll('.', '');
+    var formattedText = '';
+
+    for (var i = 0; i < cleanText.length; i++) {
+      if (i == 2 || i == 4) formattedText += '.';
+      if (i < 6) formattedText += cleanText[i];
+    }
+
+    return newValue.copyWith(
+      text: formattedText,
+      selection: TextSelection.collapsed(offset: formattedText.length),
     );
   }
 }

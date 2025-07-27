@@ -20,6 +20,9 @@ class _CategoryTabBarState extends State<CategoryTabBar> {
     'All task',
     'Home',
     'Work',
+    'Еще фильтр',
+    'Еще фильтр',
+    'Еще фильтр',
   ];
   int selectedIndex = 0;
 

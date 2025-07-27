@@ -3,9 +3,11 @@ import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 import '../../app/utils/dismiss_tap.dart';
+import '../../app/utils/validators.dart';
 import '../task/controller/task_bloc.dart';
 
 class CreateTaskScreen extends StatefulWidget {
@@ -18,6 +20,7 @@ class CreateTaskScreen extends StatefulWidget {
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
+  late TextEditingController _dateController;
   final GlobalKey<FormState> _createKey = GlobalKey<FormState>();
 
   Priority? _priorityValue = Priority.low;
@@ -28,6 +31,9 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     super.initState();
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
+    _dateController = TextEditingController(
+      text: DateFormat('dd.MM.yyyy').format(DateTime.now()),
+    );
   }
 
   @override
@@ -88,12 +94,32 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                             hintText: 'Enter title here',
                             maxLength: 30,
                             maxLines: 1,
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return 'Name cannot be empty';
-                              }
-                              return null;
-                            },
+                            validator: AppValidators.validateTitle,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: AppPadding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 10,
+                        children: [
+                          Text(
+                            'Date',
+                            style: context.theme.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          InputFormField.date(
+                            controller: _dateController,
+                            hintText: DateFormat(
+                              'dd.MM.yy',
+                            ).format(DateTime.now()),
+                            validator: AppValidators.validateDate,
                           ),
                         ],
                       ),
@@ -121,7 +147,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                             hintText: 'Enter description here',
                             maxLength: 200,
                             maxLines: 6,
-                            showCounter: true,
+                            counterText: '',
                           ),
                         ],
                       ),
@@ -198,7 +224,9 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     description: Value(description),
                     category: Value(_selectedCategories.join('|')),
                     priority: Value(_priorityValue?.toInt),
-                    createdAt: Value(DateTime.now()),
+                    createdAt: Value(
+                      DateFormat('dd.MM.yy').parse(_dateController.text),
+                    ),
                     isCompleted: const Value(false),
                   );
 
