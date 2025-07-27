@@ -9,23 +9,20 @@ class InputFormField extends StatelessWidget {
   final int? maxLength;
   final int? maxLines;
   final String? counterText;
-  final VoidCallback? onDateTap;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
 
   factory InputFormField.date(
       {String? Function(String? value)? validator,
       TextEditingController? controller,
-      VoidCallback? onDateTap,
       String? hintText,
       int maxLength = 8,
       int maxLines = 1,
       String counterText = '',
-      TextInputType keyboardType = TextInputType.datetime}) {
+      TextInputType keyboardType = TextInputType.number}) {
     return InputFormField(
       validator: validator,
       controller: controller,
-      onDateTap: onDateTap,
       hintText: hintText,
       maxLength: maxLength,
       maxLines: maxLines,
@@ -47,7 +44,6 @@ class InputFormField extends StatelessWidget {
       this.maxLength,
       this.counterText,
       this.maxLines,
-      this.onDateTap,
       this.keyboardType,
       this.inputFormatters});
 

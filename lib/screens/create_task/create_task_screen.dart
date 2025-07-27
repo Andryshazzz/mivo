@@ -77,7 +77,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   ),
                   SliverToBoxAdapter(
                     child: AppPadding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 15,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -102,7 +105,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   ),
                   SliverToBoxAdapter(
                     child: AppPadding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 15,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -128,8 +134,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   SliverToBoxAdapter(
                     child: AppPadding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
                         vertical: 10,
+                        horizontal: 15,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +162,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   SliverToBoxAdapter(
                     child: AppPadding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
+                        horizontal: 15,
                         vertical: 10,
                       ),
                       child: Column(
