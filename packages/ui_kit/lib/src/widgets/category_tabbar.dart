@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 class CategoryTabBar extends StatefulWidget {
-  const CategoryTabBar({super.key});
+  final ValueChanged<String> onCategorySelected;
+
+  const CategoryTabBar({super.key, required this.onCategorySelected});
 
   @override
   State<CategoryTabBar> createState() => _CategoryTabBarState();
@@ -13,11 +15,14 @@ class _CategoryTabBarState extends State<CategoryTabBar> {
   final List<String> categories = [
     'All task',
     'Home',
-    'Education',
-    'Buy',
-    'Work'
+    'Work',
   ];
   int selectedIndex = 0;
+
+  void _selectCategory(int index) {
+    setState(() => selectedIndex = index);
+    widget.onCategorySelected(categories[index]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +39,7 @@ class _CategoryTabBarState extends State<CategoryTabBar> {
             itemBuilder: (context, index) {
               final isSelected = selectedIndex == index;
               return GestureDetector(
-                onTap: () {
-                  setState(() => selectedIndex = index);
-                },
+                onTap: () => _selectCategory(index),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: isSelected
@@ -45,8 +48,8 @@ class _CategoryTabBarState extends State<CategoryTabBar> {
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 10),
                     child: Text(
                       categories[index],
                       style: context.theme.textTheme.bodyMedium?.copyWith(

@@ -18,6 +18,7 @@ class TaskScreen extends StatefulWidget {
 class _TaskScreenState extends State<TaskScreen> {
   late PageController _pageController;
   late DateTime _selectedDate;
+  String _selectedCategory = 'All task';
 
   @override
   void initState() {
@@ -43,6 +44,7 @@ class _TaskScreenState extends State<TaskScreen> {
     }
     setState(() {
       _selectedDate = newDate;
+      _selectedCategory = 'All task';
     });
   }
 
@@ -50,6 +52,13 @@ class _TaskScreenState extends State<TaskScreen> {
     final newDate = DateTime.now().add(Duration(days: index));
     setState(() {
       _selectedDate = newDate;
+      _selectedCategory = 'All task';
+    });
+  }
+
+  void _onCategorySelected(String category) {
+    setState(() {
+      _selectedCategory = category;
     });
   }
 
@@ -125,7 +134,11 @@ class _TaskScreenState extends State<TaskScreen> {
                     height: 100,
                     child: Row(
                       children: [
-                        const Expanded(child: CategoryTabBar()),
+                        Expanded(
+                          child: CategoryTabBar(
+                            onCategorySelected: _onCategorySelected,
+                          ),
+                        ),
                         const SizedBox(width: 15),
                         RoundButton(onTap: () {}, icon: context.icons.trash),
                       ],
@@ -139,7 +152,12 @@ class _TaskScreenState extends State<TaskScreen> {
                   onPageChanged: _onPageChanged,
                   itemBuilder: (context, index) {
                     final date = DateTime.now().add(Duration(days: index));
-                    return AppPadding(child: _TaskListForDate(date: date));
+                    return AppPadding(
+                      child: _TaskListForDate(
+                        date: date,
+                        selectedCategory: _selectedCategory,
+                      ),
+                    );
                   },
                 ),
               ),
@@ -153,8 +171,13 @@ class _TaskScreenState extends State<TaskScreen> {
 
 class _TaskListForDate extends StatelessWidget {
   final DateTime date;
+  final String selectedCategory;
 
-  const _TaskListForDate({super.key, required this.date});
+  const _TaskListForDate({
+    required this.date,
+    required this.selectedCategory,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -162,9 +185,20 @@ class _TaskListForDate extends StatelessWidget {
       builder: (context, state) {
         final todos =
             state.tasks.where((task) {
-              return task.createdAt.year == date.year &&
+              final isSameDate =
+                  task.createdAt.year == date.year &&
                   task.createdAt.month == date.month &&
                   task.createdAt.day == date.day;
+              if (!isSameDate) return false;
+              switch (selectedCategory) {
+                case 'Home':
+                  return task.category?.contains('home') ?? false;
+                case 'Work':
+                  return task.category?.contains('work') ?? false;
+                case 'all task':
+                default:
+                  return true;
+              }
             }).toList();
         if (todos.isEmpty) {
           return Center(
