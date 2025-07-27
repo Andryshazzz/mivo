@@ -34,6 +34,8 @@ class InputFormField extends StatelessWidget {
         fillColor: context.colors.noirViolet,
         hintText: hintText,
         hintStyle: TextStyle(color: context.colors.gray),
+        errorStyle: context.theme.textTheme.titleMedium!
+            .copyWith(fontSize: 12, color: context.colors.red),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         counterText: showCounter ? null : '',
@@ -45,6 +47,14 @@ class InputFormField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(color: context.colors.lavenderEcho),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: context.colors.red),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: context.colors.red),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),

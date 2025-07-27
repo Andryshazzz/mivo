@@ -15,7 +15,14 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final TextEditingController _nameController = TextEditingController();
+  late TextEditingController _nameController;
+  final GlobalKey<FormState> _authKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+  }
 
   @override
   void dispose() {
@@ -27,75 +34,127 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Text(
-                  'mivo',
-                  style: context.theme.textTheme.headlineMedium!.copyWith(
-                    fontSize: 30,
+        child: Form(
+          key: _authKey,
+          child: KeyboardDismissOnTap(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                    left: 20,
+                    right: 20,
+                    top: 20,
                   ),
-                ),
-              ),
-              const SizedBox(height: 40),
-              Text('Your name', style: context.theme.textTheme.displayLarge),
-              const SizedBox(height: 15),
-              Text(
-                'Enter your name:',
-                style: context.theme.textTheme.titleMedium!.copyWith(
-                  color: context.colors.gray,
-                ),
-              ),
-              const SizedBox(height: 40),
-              InputFormField(controller: _nameController),
-              const SizedBox(height: 20),
-              CustomButton(
-                text: 'Continue',
-                onPressed: () {
-                  final name = _nameController.text.trim();
-                  context.read<UserBloc>().add(SaveUserNameEvent(name: name));
-                  context.read<UserBloc>().add(GetUserNameEvent());
-                  if (mounted) context.go(Routes.tasks.path);
-                },
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: context.colors.grayDark,
-                      thickness: 1,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Text(
-                      'Or',
-                      style: context.theme.textTheme.bodyMedium?.copyWith(
-                        color: context.colors.gray,
+
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Text(
+                          'mivo',
+                          style: context.theme.textTheme.headlineMedium!
+                              .copyWith(fontSize: 30),
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 40),
+                      Text(
+                        'Your name',
+                        style: context.theme.textTheme.displayLarge,
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        'Enter your name:',
+                        style: context.theme.textTheme.titleMedium!.copyWith(
+                          color: context.colors.gray,
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      InputFormField(
+                        controller: _nameController,
+                        maxLength: 10,
+                        maxLines: 1,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Name cannot be empty';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      CustomButton(
+                        text: 'Continue',
+                        onPressed: () {
+                          if (!_authKey.currentState!.validate()) return;
+                          final name = _nameController.text.trim();
+
+                          context.read<UserBloc>().add(
+                            SaveUserNameEvent(name: name),
+                          );
+                          context.read<UserBloc>().add(GetUserNameEvent());
+
+                          if (mounted) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              context.go(Routes.tasks.path);
+                            });
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              color: context.colors.grayDark,
+                              thickness: 1,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Text(
+                              'Or',
+                              style: context.theme.textTheme.bodyMedium
+                                  ?.copyWith(color: context.colors.gray),
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              color: context.colors.grayDark,
+                              thickness: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      CustomButton(
+                        text: 'Какая-то кнопка в будущем',
+                        onPressed: () {},
+                        type: ButtonType.auth,
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    child: Divider(color: context.colors.gray, thickness: 1),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              CustomButton(
-                icon: const Text('G'),
-                text: 'Continue with Google',
-                onPressed: () {},
-                type: ButtonType.auth,
-              ),
-            ],
+                );
+              },
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class KeyboardDismissOnTap extends StatelessWidget {
+  final Widget child;
+
+  const KeyboardDismissOnTap({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: child,
     );
   }
 }
