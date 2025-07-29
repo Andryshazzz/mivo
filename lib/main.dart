@@ -41,9 +41,9 @@ String? _timeFormat(DateTime time) =>
 
 String? _customFormatter(LogMessage log) {
   final prefix = log.level.when(
-    v: () => '1️⃣',
-    vv: () => '2️⃣',
-    vvv: () => '3️⃣',
+    v: () => '✅',
+    vv: () => '🔄',
+    vvv: () => '🏹',
     vvvv: () => '4️⃣',
     vvvvv: () => '5️⃣',
     vvvvvv: () => '6️⃣',
