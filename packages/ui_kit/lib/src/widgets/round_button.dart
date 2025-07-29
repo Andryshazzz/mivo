@@ -20,7 +20,7 @@ class RoundButton extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
-            color: context.colors.lavenderEcho.withOpacity(0.2),
+            color: context.colors.lavenderEcho.withValues(alpha: 0.2),
           ),
         ),
         child: Padding(
@@ -59,7 +59,8 @@ class RoundSelectedButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
           border: Border.all(
-            color: borderColor ?? context.colors.lavenderEcho.withOpacity(0.2),
+            color: borderColor ??
+                context.colors.lavenderEcho.withValues(alpha: 0.2),
           ),
         ),
         child: Padding(

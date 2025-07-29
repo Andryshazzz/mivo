@@ -23,7 +23,7 @@ final GlobalKey<NavigatorState> _rootKey = GlobalKey<NavigatorState>();
 
 class Observer extends NavigatorObserver {
   @override
-  void didPop(Route route, Route? previousRoute) {
+  void didPop(Route<Object?> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
     final focus = FocusManager.instance.primaryFocus;
     focus?.unfocus();
@@ -49,7 +49,7 @@ final class AppRouter {
       }
 
       if (isAuthorized && isOnAuthPage) {
-        final userName = getIt<UserRepository>().currentName;
+        getIt<UserRepository>().currentName;
         context.read<UserBloc>().add(GetUserNameEvent());
         return Routes.tasks.path;
       }

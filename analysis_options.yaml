@@ -127,7 +127,6 @@ linter:
     - avoid_js_rounded_ints
     - avoid_multiple_declarations_per_line
     - avoid_null_checks_in_equality_operators
-    - avoid_positional_boolean_parameters
     - avoid_redundant_argument_values
     - avoid_renaming_method_parameters
     - avoid_return_types_on_setters
@@ -208,7 +207,6 @@ linter:
     - prefer_typing_uninitialized_variables
     - provide_deprecation_message
     - recursive_getters
-    - require_trailing_commas # experimental
     - sized_box_for_whitespace
     - sized_box_shrink_expand
     - slash_for_doc_comments

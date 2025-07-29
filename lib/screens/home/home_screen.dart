@@ -91,7 +91,7 @@ class _NavBarIcon extends StatelessWidget {
         colorFilter: ColorFilter.mode(
           isActive
               ? context.colors.lavenderEcho
-              : context.colors.gray.withOpacity(0.6),
+              : context.colors.gray.withValues(alpha: 0.6),
           BlendMode.srcIn,
         ),
       ),

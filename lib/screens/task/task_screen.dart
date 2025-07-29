@@ -177,7 +177,6 @@ class _TaskListForDate extends StatelessWidget {
   const _TaskListForDate({
     required this.date,
     required this.selectedCategory,
-    super.key,
   });
 
   @override

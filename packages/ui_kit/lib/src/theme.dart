@@ -24,7 +24,7 @@ class AppTheme {
   static PopupMenuThemeData _buildPopupMenuTheme() {
     return PopupMenuThemeData(
       menuPadding: EdgeInsets.zero,
-      color: ProjectColors.noirViolet.withOpacity(0.1),
+      color: ProjectColors.noirViolet.withValues(alpha: 0.1),
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -46,7 +46,7 @@ class AppTheme {
     return BottomNavigationBarThemeData(
       backgroundColor: ProjectColors.noirViolet,
       selectedItemColor: ProjectColors.lavenderEcho,
-      unselectedItemColor: ProjectColors.gray.withOpacity(0.6),
+      unselectedItemColor: ProjectColors.gray.withValues(alpha: 0.6),
       type: BottomNavigationBarType.fixed,
       selectedIconTheme: const IconThemeData(size: 28),
       unselectedIconTheme: const IconThemeData(size: 24),

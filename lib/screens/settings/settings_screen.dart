@@ -9,7 +9,6 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final bottomInset = MediaQuery.of(context).viewInsets.bottom;
         return Scaffold(
           resizeToAvoidBottomInset: false,
           body: CustomScrollView(

@@ -77,7 +77,7 @@ class _DateSelectorState extends State<DateSelector> {
             IconButton(
               icon: Icon(Icons.chevron_left,
                   color: isNow
-                      ? context.colors.gray.withOpacity(0.3)
+                      ? context.colors.gray.withValues(alpha: 0.3)
                       : context.colors.lavenderEcho),
               onPressed: isNow ? null : _previousDay,
             ),

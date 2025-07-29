@@ -37,7 +37,7 @@ class _CategorySelectorState extends State<CategorySelector> {
       context: context,
       barrierLabel: "Add Category",
       barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.3),
+      barrierColor: Colors.black.withValues(alpha: 0.3),
       transitionDuration: const Duration(milliseconds: 200),
       pageBuilder: (context, _, __) {
         return BackdropFilter(
@@ -97,7 +97,7 @@ class _CategorySelectorState extends State<CategorySelector> {
             child: RoundSelectedButton(
               borderColor: isSelected
                   ? context.colors.lavenderEcho
-                  : context.colors.lavenderEcho.withOpacity(0.2),
+                  : context.colors.lavenderEcho.withValues(alpha: 0.2),
               onTap: () => _toggleCategory(category),
               label: category,
             ),

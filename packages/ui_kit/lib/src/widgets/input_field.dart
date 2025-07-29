@@ -70,8 +70,8 @@ class InputFormField extends StatelessWidget {
         counterText: counterText,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide:
-              BorderSide(color: context.colors.lavenderEcho.withOpacity(0.2)),
+          borderSide: BorderSide(
+              color: context.colors.lavenderEcho.withValues(alpha: 0.2)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),

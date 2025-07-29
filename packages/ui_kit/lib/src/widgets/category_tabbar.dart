@@ -73,7 +73,7 @@ class _CategoryTabBarState extends State<CategoryTabBar> {
                       style: context.theme.textTheme.bodyMedium?.copyWith(
                         color: isSelected
                             ? context.colors.white
-                            : context.colors.gray.withOpacity(0.6),
+                            : context.colors.gray.withValues(alpha: 0.6),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -96,7 +96,7 @@ class _CategoryTabBarState extends State<CategoryTabBar> {
                   end: Alignment.centerRight,
                   colors: [
                     Colors.transparent,
-                    context.colors.noirViolet.withOpacity(0.9),
+                    context.colors.noirViolet.withValues(alpha: 0.9),
                   ],
                 ),
               ),
