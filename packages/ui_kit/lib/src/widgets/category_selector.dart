@@ -44,7 +44,7 @@ class _CategorySelectorState extends State<CategorySelector> {
           filter: ImageFilter.blur(sigmaX: 6.0, sigmaY: 6.0),
           child: Center(
             child: AlertDialog(
-              backgroundColor: context.colors.noirViolet,
+              backgroundColor: context.colors.background,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),

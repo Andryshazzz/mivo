@@ -59,7 +59,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 slivers: [
                   SliverAppBar(
                     pinned: true,
-                    backgroundColor: context.colors.noirViolet,
+                    backgroundColor: context.colors.background,
                     surfaceTintColor: Colors.transparent,
                     leading: AppPadding(
                       child: RoundButton(

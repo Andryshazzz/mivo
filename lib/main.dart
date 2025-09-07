@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:auth_test/app/dependencies/dependencies.dart';
 import 'package:auth_test/screens/auth/controller/user_bloc.dart';
+import 'package:auth_test/screens/settings/controller/settings_cubit.dart';
+import 'package:auth_test/screens/settings/controller/settings_state.dart';
 import 'package:flashy_flushbar/flashy_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,12 +29,22 @@ class MivoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<UserBloc>(),
-      child: MaterialApp.router(
-        theme: AppTheme.darkTheme,
-        routerConfig: AppRouter.router,
-        builder: FlashyFlushbarProvider.init(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<UserBloc>()),
+        BlocProvider(create: (context) => SettingsCubit()),
+      ],
+      child: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            theme:
+                state.theme == 'light'
+                    ? AppTheme.lightTheme
+                    : AppTheme.darkTheme,
+            routerConfig: AppRouter.router,
+            builder: FlashyFlushbarProvider.init(),
+          );
+        },
       ),
     );
   }

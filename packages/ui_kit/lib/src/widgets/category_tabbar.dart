@@ -96,7 +96,7 @@ class _CategoryTabBarState extends State<CategoryTabBar> {
                   end: Alignment.centerRight,
                   colors: [
                     Colors.transparent,
-                    context.colors.noirViolet.withValues(alpha: 0.9),
+                    context.colors.background.withValues(alpha: 0.9),
                   ],
                 ),
               ),

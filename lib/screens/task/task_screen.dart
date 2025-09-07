@@ -70,7 +70,7 @@ class _TaskScreenState extends State<TaskScreen> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            context.colors.noirViolet,
+            context.colors.background,
             context.colors.noirVioletBackGradient,
           ],
           stops: const [0.7, 1],

@@ -60,7 +60,7 @@ class InputFormField extends StatelessWidget {
       cursorColor: context.colors.lavenderEcho,
       decoration: InputDecoration(
         filled: true,
-        fillColor: context.colors.noirViolet,
+        fillColor: context.colors.background,
         hintText: hintText,
         hintStyle: TextStyle(color: context.colors.gray),
         errorStyle: context.theme.textTheme.titleMedium!

@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: context.colors.noirViolet,
+        color: context.colors.background,
         shape: CustomNotchedShape(),
         notchMargin: 10,
         child: Padding(
