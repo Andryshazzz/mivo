@@ -105,6 +105,12 @@ class ProjectIconsExtension {
   String get plus => ProjectIcons.plus;
 
   String get pencil => ProjectIcons.pencil;
+
+  String get info => ProjectIcons.info;
+
+  String get error => ProjectIcons.error;
+
+  String get close => ProjectIcons.close;
 }
 
 extension ThemeShortcuts on BuildContext {

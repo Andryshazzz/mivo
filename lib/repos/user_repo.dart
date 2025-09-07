@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:l/l.dart';
 
 import '../data/source/local/db.dart';
 
@@ -15,16 +16,31 @@ class UserRepository {
   UserRepository({required this.db});
 
   Future<void> saveUserName(String name) async {
-    await db.saveUserName(name);
+    try {
+      await db.saveUserName(name);
+    } catch (e, st) {
+      l.e('$e, $st');
+      rethrow;
+    }
   }
 
   Future<String?> getUserName() async {
-    final user = await db.getUserName();
-    _userName = user;
-    return user;
+    try {
+      final user = await db.getUserName();
+      _userName = user;
+      return user;
+    } catch (e, st) {
+      l.e('$e, $st');
+      rethrow;
+    }
   }
 
   Future<bool> hasUser() async {
-    return db.hasUser();
+    try {
+      return db.hasUser();
+    } catch (e, st) {
+      l.e('$e, $st');
+      rethrow;
+    }
   }
 }

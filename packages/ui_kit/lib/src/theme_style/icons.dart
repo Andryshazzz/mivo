@@ -11,4 +11,7 @@ class ProjectIcons {
       'packages/ui_kit/assets/icons/chevron_right.svg';
   static const String plus = 'packages/ui_kit/assets/icons/plus.svg';
   static const String pencil = 'packages/ui_kit/assets/icons/pencil.svg';
+  static const String info = 'packages/ui_kit/assets/icons/info.svg';
+  static const String error = 'packages/ui_kit/assets/icons/error.svg';
+  static const String close = 'packages/ui_kit/assets/icons/close.svg';
 }

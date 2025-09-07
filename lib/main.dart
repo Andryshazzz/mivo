@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:auth_test/app/dependencies/dependencies.dart';
 import 'package:auth_test/screens/auth/controller/user_bloc.dart';
+import 'package:flashy_flushbar/flashy_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:l/l.dart';
@@ -31,6 +32,7 @@ class MivoApp extends StatelessWidget {
       child: MaterialApp.router(
         theme: AppTheme.darkTheme,
         routerConfig: AppRouter.router,
+        builder: FlashyFlushbarProvider.init(),
       ),
     );
   }

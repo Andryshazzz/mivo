@@ -30,3 +30,4 @@ dependencies:
     sdk: flutter
   intl: ^0.20.2
   flutter_svg: ^2.0.17
+  flashy_flushbar: ^1.4.0

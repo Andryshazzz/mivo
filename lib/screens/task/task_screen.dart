@@ -174,10 +174,7 @@ class _TaskListForDate extends StatelessWidget {
   final DateTime date;
   final String selectedCategory;
 
-  const _TaskListForDate({
-    required this.date,
-    required this.selectedCategory,
-  });
+  const _TaskListForDate({required this.date, required this.selectedCategory});
 
   @override
   Widget build(BuildContext context) {

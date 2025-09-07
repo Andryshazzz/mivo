@@ -76,6 +76,7 @@ analyzer:
     # Pub Rules
     depend_on_referenced_packages: error
     secure_pubspec_urls: warning
+    avoid_catches_without_on_clauses: ignore
 
 linter:
   rules:
